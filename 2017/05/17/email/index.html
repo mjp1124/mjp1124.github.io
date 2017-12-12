@@ -1,0 +1,850 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="send_email,jinja2," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="确定要发送的内容将table1,table2作为发送内容12345from pandas import DataFrameimport pandas as pdtable1 = DataFrame(&amp;#123;&apos;A&apos;:[1,2,3,],&apos;B&apos;:[2,3,4]&amp;#125;)table2 = DataFrame(&amp;#123;&apos;C&apos;:[1,3,3,],&apos;D&apos;:[2,3,4]&amp;#125;)">
+<meta name="keywords" content="send_email,jinja2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="报告邮件自动化发送">
+<meta property="og:url" content="https://mjp1124.github.io/2017/05/17/email/index.html">
+<meta property="og:site_name" content="Adventures in Wonderland">
+<meta property="og:description" content="确定要发送的内容将table1,table2作为发送内容12345from pandas import DataFrameimport pandas as pdtable1 = DataFrame(&amp;#123;&apos;A&apos;:[1,2,3,],&apos;B&apos;:[2,3,4]&amp;#125;)table2 = DataFrame(&amp;#123;&apos;C&apos;:[1,3,3,],&apos;D&apos;:[2,3,4]&amp;#125;)">
+<meta property="og:image" content="https://mjp1124.github.io/2017/05/17/email/table1.png">
+<meta property="og:image" content="https://mjp1124.github.io/2017/05/17/email/table2.png">
+<meta property="og:image" content="https://mjp1124.github.io/2017/05/17/email/email_test.png">
+<meta property="og:updated_time" content="2017-05-25T06:29:15.596Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="报告邮件自动化发送">
+<meta name="twitter:description" content="确定要发送的内容将table1,table2作为发送内容12345from pandas import DataFrameimport pandas as pdtable1 = DataFrame(&amp;#123;&apos;A&apos;:[1,2,3,],&apos;B&apos;:[2,3,4]&amp;#125;)table2 = DataFrame(&amp;#123;&apos;C&apos;:[1,3,3,],&apos;D&apos;:[2,3,4]&amp;#125;)">
+<meta name="twitter:image" content="https://mjp1124.github.io/2017/05/17/email/table1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://mjp1124.github.io/2017/05/17/email/"/>
+
+
+
+
+
+  <title>报告邮件自动化发送 | Adventures in Wonderland</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Adventures in Wonderland</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://mjp1124.github.io/2017/05/17/email/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Icey">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures in Wonderland">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">报告邮件自动化发送</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T00:00:00+08:00">
+                2017-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/email/" itemprop="url" rel="index">
+                    <span itemprop="name">email</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="确定要发送的内容"><a href="#确定要发送的内容" class="headerlink" title="确定要发送的内容"></a>确定要发送的内容</h1><h2 id="将table1-table2作为发送内容"><a href="#将table1-table2作为发送内容" class="headerlink" title="将table1,table2作为发送内容"></a>将table1,table2作为发送内容</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pandas <span class="keyword">import</span> DataFrame</div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"></div><div class="line">table1 = DataFrame(&#123;<span class="string">'A'</span>:[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,],<span class="string">'B'</span>:[<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]&#125;)</div><div class="line">table2 = DataFrame(&#123;<span class="string">'C'</span>:[<span class="number">1</span>,<span class="number">3</span>,<span class="number">3</span>,],<span class="string">'D'</span>:[<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]&#125;)</div></pre></td></tr></table></figure>
+<img src="/2017/05/17/email/table1.png" alt="table1" title="table1"> 
+<img src="/2017/05/17/email/table2.png" alt="table2" title="table2"> 
+<a id="more"></a>
+<h1 id="将table转化成HTML格式"><a href="#将table转化成HTML格式" class="headerlink" title="将table转化成HTML格式"></a>将table转化成HTML格式</h1><h2 id="此处用到jinja2模板引擎"><a href="#此处用到jinja2模板引擎" class="headerlink" title="此处用到jinja2模板引擎"></a>此处用到jinja2模板引擎</h2><pre><code>* jinja2中有一个核心对象: template Environment(模板环境), 这个类的实例被用于存储配置信息, 全局对象, 从文件系统或其他位置加载模板, 甚至如果你使用Template的构造器创建一个String类型的模板的时候, 也会自动的创建一个Environment对象.
+*  Environment一般在一个应用中只创建一个, 当系统中有不同的配置需求的时候, 就需要创建多个Environment对象相互支持
+*  创建一个Environment对象: env = Environment(loader = FileSystemLoader(‘templates’))…意思是创建一个template Environment对象, 使用的加载器loader是FileSystemLoader类型, 可以加载的模板是当前工作目录下的templates目录下的模板文件
+* 加载一个模板: template = env.get_template(‘mytemplate.html’), 使用env的模板环境加载名为mytemplate.html的模板文件.
+* 渲染一个模板: template.render(date_str=date_str), 渲染模板template, 传入了模板参数date_str值为date_str
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> jinja2 <span class="keyword">import</span> Template, Environment, FileSystemLoader</div><div class="line">templateLoader = FileSystemLoader(searchpath=<span class="string">"template/"</span>) <span class="comment"># 我的模板存在了template文件夹</span></div><div class="line">env = Environment(loader=templateLoader)</div></pre></td></tr></table></figure>
+<h3 id="header模板定义了，我要发送的邮件的开头内容，内容如下"><a href="#header模板定义了，我要发送的邮件的开头内容，内容如下" class="headerlink" title="header模板定义了，我要发送的邮件的开头内容，内容如下:"></a>header模板定义了，我要发送的邮件的开头内容，内容如下:</h3><ul>
+<li>需要传进去的参数为date_str和author</li>
+</ul>
+<h4>DEAR ALL～，此为，自动发送的邮件，请勿直接回复，如有疑问，请与联系，谢谢！ </h4>
+
+<h3 id="main-body-templet模板定义了我要发送的内容，里面内容很简单，因为每次添加的内容只是一张表，所以如下："><a href="#main-body-templet模板定义了我要发送的内容，里面内容很简单，因为每次添加的内容只是一张表，所以如下：" class="headerlink" title="main_body_templet模板定义了我要发送的内容，里面内容很简单，因为每次添加的内容只是一张表，所以如下："></a>main_body_templet模板定义了我要发送的内容，里面内容很简单，因为每次添加的内容只是一张表，所以如下：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% from &quot;detail.html&quot; import table with context %&#125;</div><div class="line"></div><div class="line">&#123;&#123;table(data)&#125;&#125;</div></pre></td></tr></table></figure>
+<h3 id="注意上面的模板中，我调用了detail模板，detail内容如下：里面的内容是我对要发送的table的一些定义"><a href="#注意上面的模板中，我调用了detail模板，detail内容如下：里面的内容是我对要发送的table的一些定义" class="headerlink" title="注意上面的模板中，我调用了detail模板，detail内容如下：里面的内容是我对要发送的table的一些定义"></a>注意上面的模板中，我调用了detail模板，detail内容如下：里面的内容是我对要发送的table的一些定义</h3><ul>
+<li>此处我定义了even和odd是为了不同行显示不同颜色，也可以在style里面定义</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&#123;% macro table(data) %&#125;</div><div class="line">    &lt;table&gt;</div><div class="line">         &#123;% for row in data%&#125;</div><div class="line">		&#123;% if (row[0]!=&apos;序号&apos;) and (row[0]%2==0) %&#125;</div><div class="line">		&lt;tr class=&apos;odd&apos;&gt;</div><div class="line">		&#123;% elif (row[0]!=&apos;序号&apos;) and (row[0]%2!=0) %&#125;</div><div class="line">		&lt;tr class =&apos;even&apos;&gt;</div><div class="line">		&#123;% else %&#125;</div><div class="line">		&lt;tr class =&apos;tableHeader&apos;&gt;</div><div class="line">		&#123;% endif %&#125;</div><div class="line">                &#123;% for col in row%&#125;</div><div class="line">                	&lt;td&gt;&#123;&#123;col&#125;&#125;&lt;/td&gt;</div><div class="line">                &#123;% endfor %&#125;</div><div class="line">            	&lt;/tr&gt;</div><div class="line">        &#123;% endfor %&#125;</div><div class="line">    &lt;/table&gt;</div><div class="line">&#123;% endmacro %&#125;</div></pre></td></tr></table></figure>
+<h2 id="利用模板"><a href="#利用模板" class="headerlink" title="利用模板"></a>利用模板</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">start_template = env.get_template(<span class="string">'header.html'</span>)</div><div class="line">table_template = env.get_template(<span class="string">'main_body_templet.html'</span>)</div><div class="line">date_str = datetime.strftime(datetime.now(), <span class="string">'%Y-%m-%d'</span>)</div><div class="line">start_statement = start_template.render(date_str=date_str,author=<span class="string">'Icey'</span>)<span class="comment">#传进参数并渲染模板</span></div></pre></td></tr></table></figure>
+<ul>
+<li>start_statement内容如下</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">start_statement</div></pre></td></tr></table></figure>
+<pre><code>&apos;\n&lt;h4&gt;DEAR ALL～，此为2017-05-17，自动发送的邮件，请勿直接回复，如有疑问，请与Icey联系，谢谢！ &lt;/h4&gt;\n&apos;
+</code></pre><ul>
+<li>下一步我们要去渲染table的模板，此处我定义了一个函数，可以得到我要发送的html,内容如下：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_html_text</span><span class="params">(input_df)</span>:</span></div><div class="line">    header = list(input_df.columns)</div><div class="line">    header.insert(<span class="number">0</span>, <span class="string">'序号'</span>)</div><div class="line">    email_list = []</div><div class="line">    email_list.append(header)</div><div class="line">    email_list.extend(input_df.to_records())</div><div class="line">    html_text = table_template.render(data=email_list)</div><div class="line"><span class="comment">#     html_text = [s for s in html_text.split('\n') if s.replace('\t', '').replace(' ', '') != '']</span></div><div class="line">    <span class="keyword">return</span> html_text</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 传入table,得到对应的html_text</span></div><div class="line">table1_html,table2_html = get_html_text(table1),get_html_text(table2)</div></pre></td></tr></table></figure>
+<ul>
+<li>一般情况下我们在发送的表格前都会加一些备注，以便收件人容易理解</li>
+<li>将我们添加的内容和输出的内容进行组合</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mid1 = <span class="string">'&lt;h2&gt;table1的内容:&lt;/h2&gt;'</span></div><div class="line">mid2 = <span class="string">'&lt;h2&gt;table2的内容:&lt;/h2&gt;'</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">html_text = start_statement + mid1 + table1_html + mid2 + table2_html</div><div class="line">html_text = [s <span class="keyword">for</span> s <span class="keyword">in</span> html_text.split(<span class="string">'\n'</span>) <span class="keyword">if</span> s.replace(<span class="string">'\t'</span>, <span class="string">''</span>).replace(<span class="string">' '</span>, <span class="string">''</span>) != <span class="string">''</span>] <span class="comment"># 进行一下整理</span></div><div class="line">html_text</div></pre></td></tr></table></figure>
+<pre><code>[&apos;&lt;h4&gt;DEAR ALL～，此为2017-05-17，自动发送的邮件，请勿直接回复，如有疑问，请与Icey联系，谢谢！ &lt;/h4&gt;&apos;,
+ &apos;&lt;h2&gt;table1的内容:&lt;/h2&gt;&apos;,
+ &apos;    &lt;table&gt;&apos;,
+ &quot;\t\t&lt;tr class =&apos;tableHeader&apos;&gt;&quot;,
+ &apos;                \t&lt;td&gt;序号&lt;/td&gt;&apos;,
+ &apos;                \t&lt;td&gt;A&lt;/td&gt;&apos;,
+ &apos;                \t&lt;td&gt;B&lt;/td&gt;&apos;,
+ &apos;            \t&lt;/tr&gt;&apos;,
+ &quot;\t\t&lt;tr class=&apos;odd&apos;&gt;&quot;,
+ &apos;                \t&lt;td&gt;0&lt;/td&gt;&apos;,
+ &apos;                \t&lt;td&gt;1&lt;/td&gt;&apos;,
+ &apos;                \t&lt;td&gt;2&lt;/td&gt;&apos;,
+ &apos;            \t&lt;/tr&gt;&apos;,
+ &quot;\t\t&lt;tr class =&apos;even&apos;&gt;&quot;,
+ &apos;                \t&lt;td&gt;1&lt;/td&gt;&apos;,
+ &apos;                \t&lt;td&gt;2&lt;/td&gt;&apos;,
+ &apos;                \t&lt;td&gt;3&lt;/td&gt;&apos;,
+ &apos;            \t&lt;/tr&gt;&apos;,
+ &quot;\t\t&lt;tr class=&apos;odd&apos;&gt;&quot;,
+ &apos;                \t&lt;td&gt;2&lt;/td&gt;&apos;,
+ &apos;                \t&lt;td&gt;3&lt;/td&gt;&apos;,
+ &apos;                \t&lt;td&gt;4&lt;/td&gt;&apos;,
+ &apos;            \t&lt;/tr&gt;&apos;,
+ &apos;    &lt;/table&gt;&apos;,
+ &apos;&lt;h2&gt;table2的内容:&lt;/h2&gt;&apos;,
+ &apos;    &lt;table&gt;&apos;,
+ &quot;\t\t&lt;tr class =&apos;tableHeader&apos;&gt;&quot;,
+ &apos;                \t&lt;td&gt;序号&lt;/td&gt;&apos;,
+ &apos;                \t&lt;td&gt;C&lt;/td&gt;&apos;,
+ &apos;                \t&lt;td&gt;D&lt;/td&gt;&apos;,
+ &apos;            \t&lt;/tr&gt;&apos;,
+ &quot;\t\t&lt;tr class=&apos;odd&apos;&gt;&quot;,
+ &apos;                \t&lt;td&gt;0&lt;/td&gt;&apos;,
+ &apos;                \t&lt;td&gt;1&lt;/td&gt;&apos;,
+ &apos;                \t&lt;td&gt;2&lt;/td&gt;&apos;,
+ &apos;            \t&lt;/tr&gt;&apos;,
+ &quot;\t\t&lt;tr class =&apos;even&apos;&gt;&quot;,
+ &apos;                \t&lt;td&gt;1&lt;/td&gt;&apos;,
+ &apos;                \t&lt;td&gt;3&lt;/td&gt;&apos;,
+ &apos;                \t&lt;td&gt;3&lt;/td&gt;&apos;,
+ &apos;            \t&lt;/tr&gt;&apos;,
+ &quot;\t\t&lt;tr class=&apos;odd&apos;&gt;&quot;,
+ &apos;                \t&lt;td&gt;2&lt;/td&gt;&apos;,
+ &apos;                \t&lt;td&gt;3&lt;/td&gt;&apos;,
+ &apos;                \t&lt;td&gt;4&lt;/td&gt;&apos;,
+ &apos;            \t&lt;/tr&gt;&apos;,
+ &apos;    &lt;/table&gt;&apos;]
+</code></pre><h2 id="定义要发送的内容的格式"><a href="#定义要发送的内容的格式" class="headerlink" title="定义要发送的内容的格式"></a>定义要发送的内容的格式</h2><ul>
+<li>格式这些可以在网上找，有很多漂亮的</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">styles = <span class="string">'''</span></div><div class="line">&lt;style&gt;</div><div class="line">    table &#123;</div><div class="line">        background:#87ceeb;</div><div class="line">        color: #333; /* Lighten up font color */</div><div class="line">        font-family: Helvetica, Arial, sans-serif; /* Nicer font */</div><div class="line">        width: 640px;</div><div class="line">        border-collapse:</div><div class="line">        collapse; border-spacing: 0;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">   td, th &#123; border: 1px solid #CCC; height: 30px; &#125; /* Make cells a bit taller */</div><div class="line"></div><div class="line">   th &#123;</div><div class="line">        background: #F3F3F3; /* Light grey background */</div><div class="line">        font-weight: bold; /* Make sure they're bold */</div><div class="line">    &#125;</div><div class="line">   td &#123;</div><div class="line">        /*background: #FAFAFA;  Lighter grey background */</div><div class="line">        text-align: center; /* Center our text */</div><div class="line">    &#125;</div><div class="line">   .odd&gt;td &#123; background: #FEFEFE;&#125;</div><div class="line">   .even&gt;td &#123; background: #F1F1F1;&#125;</div><div class="line"></div><div class="line">&lt;/style&gt;</div><div class="line"></div><div class="line">'''</div></pre></td></tr></table></figure>
+<h2 id="将发送内容与格式结合在一起，得到最终发送内容及格式"><a href="#将发送内容与格式结合在一起，得到最终发送内容及格式" class="headerlink" title="将发送内容与格式结合在一起，得到最终发送内容及格式"></a>将发送内容与格式结合在一起，得到最终发送内容及格式</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">html_text = transform(styles + <span class="string">'\n'</span>.join(html_text))</div></pre></td></tr></table></figure>
+<h1 id="定义一个发送邮件的函数"><a href="#定义一个发送邮件的函数" class="headerlink" title="定义一个发送邮件的函数"></a>定义一个发送邮件的函数</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> email.mime.multipart <span class="keyword">import</span> MIMEMultipart</div><div class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</div><div class="line"><span class="keyword">from</span> email.mime.image <span class="keyword">import</span> MIMEImage</div><div class="line"><span class="keyword">from</span> email.mime.application <span class="keyword">import</span> MIMEApplication</div><div class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> basename</div><div class="line"><span class="keyword">from</span> premailer <span class="keyword">import</span> transform</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_mail</span><span class="params">(from_addr, to_addr,pass_word, subject, html_text, styles = <span class="string">''</span>, cc_addr = None, bcc_addr = None,  alternative_plain_text = <span class="string">''</span>, local_images = None, attachments = None)</span>:</span></div><div class="line">    cc_addr = cc_addr <span class="keyword">or</span> []</div><div class="line">    bcc_addr = bcc_addr <span class="keyword">or</span> []</div><div class="line">    local_images = local_images <span class="keyword">or</span> &#123;&#125;</div><div class="line">    attachments = attachments <span class="keyword">or</span> []    </div><div class="line">    to_all_addr = to_addr+cc_addr+bcc_addr</div><div class="line"></div><div class="line"></div><div class="line">    html_text = transform(</div><div class="line">        styles+html_text</div><div class="line">    )</div><div class="line"></div><div class="line">    <span class="comment"># Create the root message and fill in the from, to, and subject headers</span></div><div class="line">    msgRoot = MIMEMultipart(<span class="string">'related'</span>)</div><div class="line">    msgRoot[<span class="string">'Subject'</span>] = subject</div><div class="line">    <span class="comment">#msgRoot['From'] = from_addr</span></div><div class="line">    <span class="comment">#msgRoot['To'] = ','.join(to_addr)</span></div><div class="line">    msgRoot.preamble = <span class="string">'This is a multi-part message in MIME format.'</span></div><div class="line"></div><div class="line">    <span class="comment"># Encapsulate the plain and HTML versions of the message body in an</span></div><div class="line">    <span class="comment"># 'alternative' part, so message agents can decide which they want to display.</span></div><div class="line">    msgText = MIMEText(alternative_plain_text)</div><div class="line">    msgAlternative = MIMEMultipart(<span class="string">'alternative'</span>)</div><div class="line">    msgAlternative.attach(msgText)</div><div class="line"></div><div class="line">    <span class="comment"># We reference the image in the IMG SRC attribute by the ID we give it below</span></div><div class="line">    msgText = MIMEText(html_text, <span class="string">'html'</span>)</div><div class="line">    <span class="comment">#msgAlternative.attach(msgText)</span></div><div class="line"></div><div class="line">    msgRoot.attach(msgText)</div><div class="line"></div><div class="line"></div><div class="line">    msgRoot.add_header(<span class="string">'From'</span>,from_addr)</div><div class="line">    msgRoot.add_header(<span class="string">'To'</span>, <span class="string">","</span>.join(to_addr))</div><div class="line">    msgRoot.add_header(<span class="string">'Cc'</span>, <span class="string">","</span>.join(cc_addr))</div><div class="line">    msgRoot.add_header(<span class="string">'Bcc'</span>, <span class="string">","</span>.join(bcc_addr))</div><div class="line"></div><div class="line">    <span class="comment"># This example assumes the image is in the current directory</span></div><div class="line">    <span class="keyword">for</span> cid, path <span class="keyword">in</span> local_images.items():</div><div class="line">        fp = open(path, <span class="string">'rb'</span>)</div><div class="line">        msgImage = MIMEImage(fp.read())</div><div class="line">        fp.close()</div><div class="line"></div><div class="line">        <span class="comment"># Define the image's ID as referenced above</span></div><div class="line">        msgImage.add_header(<span class="string">'Content-ID'</span>, <span class="string">'&lt;&#123;cid&#125;&gt;'</span>.format(cid = cid))</div><div class="line">        msgRoot.attach(msgImage)</div><div class="line"></div><div class="line">    <span class="keyword">for</span> path <span class="keyword">in</span> attachments <span class="keyword">or</span> []:</div><div class="line">        <span class="keyword">with</span> open(path, <span class="string">"rb"</span>) <span class="keyword">as</span> file:</div><div class="line">            part = MIMEApplication(</div><div class="line">                file.read(),</div><div class="line">                Name=basename(path)</div><div class="line">            )</div><div class="line">            part[<span class="string">'Content-Disposition'</span>] = <span class="string">'attachment; filename="&#123;&#125;"'</span>.format(basename(path)) </div><div class="line">            msgRoot.attach(part)    </div><div class="line"></div><div class="line">    <span class="comment"># Send the email (this example assumes SMTP authentication is required)</span></div><div class="line">    <span class="keyword">import</span> smtplib</div><div class="line">    smtp = smtplib.SMTP()</div><div class="line">    smtp.connect(<span class="string">'smtp.exmail.qq.com'</span>)</div><div class="line">    smtp.login(from_addr, pass_word)</div><div class="line">    smtp.sendmail(from_addr, to_all_addr, msgRoot.as_string())</div><div class="line">    smtp.quit()</div></pre></td></tr></table></figure>
+<h1 id="利用上面定义的发邮件的函数，将相应参数传进去就可以发送邮件啦～"><a href="#利用上面定义的发邮件的函数，将相应参数传进去就可以发送邮件啦～" class="headerlink" title="利用上面定义的发邮件的函数，将相应参数传进去就可以发送邮件啦～"></a>利用上面定义的发邮件的函数，将相应参数传进去就可以发送邮件啦～</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">subject = <span class="string">'发送邮件报告测试'</span></div><div class="line">alternative_plain_text = <span class="string">'alternative text'</span></div><div class="line">send_mail(</div><div class="line">    <span class="string">'******@**.com'</span>,<span class="comment">#发件人</span></div><div class="line">    [<span class="string">'******@**.com'</span>],<span class="comment">#发件人</span></div><div class="line">    password,</div><div class="line">    subject,</div><div class="line">    html_text,</div><div class="line">    styles=styles,</div><div class="line">    cc_addr=<span class="keyword">None</span>,</div><div class="line">    bcc_addr=<span class="keyword">None</span>,</div><div class="line">    alternative_plain_text=<span class="string">'alternative text'</span>,</div><div class="line">    local_images=<span class="keyword">None</span>,</div><div class="line">    attachments=<span class="keyword">None</span>)</div></pre></td></tr></table></figure>
+<h1 id="有时候想发送的邮件中包含很多图片，这时候，我们可以在send-email的local-image定义图片的地址，此处暂不作详细介绍"><a href="#有时候想发送的邮件中包含很多图片，这时候，我们可以在send-email的local-image定义图片的地址，此处暂不作详细介绍" class="headerlink" title="有时候想发送的邮件中包含很多图片，这时候，我们可以在send_email的local_image定义图片的地址，此处暂不作详细介绍"></a>有时候想发送的邮件中包含很多图片，这时候，我们可以在send_email的local_image定义图片的地址，此处暂不作详细介绍</h1><img src="/2017/05/17/email/email_test.png" alt="结果" title="结果"> 
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/send-email/" rel="tag"># send_email</a>
+          
+            <a href="/tags/jinja2/" rel="tag"># jinja2</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/10/database/" rel="next" title="python与数据库的连接与使用">
+                <i class="fa fa-chevron-left"></i> python与数据库的连接与使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/18/pandas/" rel="prev" title="利用pandas进行数据分析的常用小功能">
+                利用pandas进行数据分析的常用小功能 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Icey" />
+          <p class="site-author-name" itemprop="name">Icey</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#确定要发送的内容"><span class="nav-number">1.</span> <span class="nav-text">确定要发送的内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#将table1-table2作为发送内容"><span class="nav-number">1.1.</span> <span class="nav-text">将table1,table2作为发送内容</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#将table转化成HTML格式"><span class="nav-number">2.</span> <span class="nav-text">将table转化成HTML格式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#此处用到jinja2模板引擎"><span class="nav-number">2.1.</span> <span class="nav-text">此处用到jinja2模板引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#header模板定义了，我要发送的邮件的开头内容，内容如下"><span class="nav-number">2.1.1.</span> <span class="nav-text">header模板定义了，我要发送的邮件的开头内容，内容如下:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#undefined"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">DEAR ALL～，此为，自动发送的邮件，请勿直接回复，如有疑问，请与联系，谢谢！ </span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#main-body-templet模板定义了我要发送的内容，里面内容很简单，因为每次添加的内容只是一张表，所以如下："><span class="nav-number">2.1.2.</span> <span class="nav-text">main_body_templet模板定义了我要发送的内容，里面内容很简单，因为每次添加的内容只是一张表，所以如下：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意上面的模板中，我调用了detail模板，detail内容如下：里面的内容是我对要发送的table的一些定义"><span class="nav-number">2.1.3.</span> <span class="nav-text">注意上面的模板中，我调用了detail模板，detail内容如下：里面的内容是我对要发送的table的一些定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用模板"><span class="nav-number">2.2.</span> <span class="nav-text">利用模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义要发送的内容的格式"><span class="nav-number">2.3.</span> <span class="nav-text">定义要发送的内容的格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将发送内容与格式结合在一起，得到最终发送内容及格式"><span class="nav-number">2.4.</span> <span class="nav-text">将发送内容与格式结合在一起，得到最终发送内容及格式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#定义一个发送邮件的函数"><span class="nav-number">3.</span> <span class="nav-text">定义一个发送邮件的函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#利用上面定义的发邮件的函数，将相应参数传进去就可以发送邮件啦～"><span class="nav-number">4.</span> <span class="nav-text">利用上面定义的发邮件的函数，将相应参数传进去就可以发送邮件啦～</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#有时候想发送的邮件中包含很多图片，这时候，我们可以在send-email的local-image定义图片的地址，此处暂不作详细介绍"><span class="nav-number">5.</span> <span class="nav-text">有时候想发送的邮件中包含很多图片，这时候，我们可以在send_email的local_image定义图片的地址，此处暂不作详细介绍</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Icey</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

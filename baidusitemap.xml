@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+    
+  <url>
+    <loc>https://mjp1124.github.io/2017/12/12/model_key/</loc>
+    <lastmod>2017-12-12T08:31:56.118Z</lastmod>
+    <data>
+        <display>
+        <title>评价分类模型好坏的重要指标ROC,PRC,KS</title>
+        <pubTime>2017-12-11T16:00:00.000Z</pubTime>
+        
+        <tag>analysis</tag>
+         
+        <tag>model</tag>
+         
+        <tag>Random Forest</tag>
+         
+        <tag>GBDT</tag>
+         
+         
+           
+             
+              <breadCrumb title="model" url="https://mjp1124.github.io/categories/model/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
+    <loc>https://mjp1124.github.io/2017/12/08/asset_quality_analysis/</loc>
+    <lastmod>2017-12-08T09:30:14.226Z</lastmod>
+    <data>
+        <display>
+        <title>借贷产品资产质量分析报告</title>
+        <pubTime>2017-12-07T16:00:00.000Z</pubTime>
+        
+        <tag>analysis</tag>
+         
+        <tag>asset</tag>
+         
+         
+           
+             
+              <breadCrumb title="analysis" url="https://mjp1124.github.io/categories/analysis/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://mjp1124.github.io/2017/05/19/plot/</loc>
+    <lastmod>2017-12-08T08:13:50.502Z</lastmod>
+    <data>
+        <display>
+        <title>数据分析中利用matplotlib画图</title>
+        <pubTime>2017-05-18T16:00:00.000Z</pubTime>
+        
+        <tag>plot</tag>
+         
+        <tag>matplotlib</tag>
+         
+         
+           
+             
+              <breadCrumb title="analysis" url="https://mjp1124.github.io/categories/analysis/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://mjp1124.github.io/2017/05/18/pandas/</loc>
+    <lastmod>2017-12-08T08:13:38.602Z</lastmod>
+    <data>
+        <display>
+        <title>利用pandas进行数据分析的常用小功能</title>
+        <pubTime>2017-05-17T16:00:00.000Z</pubTime>
+        
+        <tag>pandas</tag>
+         
+        <tag>data_analyse</tag>
+         
+         
+           
+             
+              <breadCrumb title="analysis" url="https://mjp1124.github.io/categories/analysis/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://mjp1124.github.io/2017/05/10/database/</loc>
+    <lastmod>2017-12-06T01:44:11.673Z</lastmod>
+    <data>
+        <display>
+        <title>python与数据库的连接与使用</title>
+        <pubTime>2017-05-09T16:00:00.000Z</pubTime>
+        
+        <tag>oracle</tag>
+         
+        <tag>mysql</tag>
+         
+        <tag>mangodb</tag>
+         
+         
+           
+             
+              <breadCrumb title="database" url="https://mjp1124.github.io/categories/database/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://mjp1124.github.io/2017/09/23/model/</loc>
+    <lastmod>2017-12-05T09:03:12.498Z</lastmod>
+    <data>
+        <display>
+        <title>随机森林与GBDT简单对比及代码样例</title>
+        <pubTime>2017-09-22T16:00:00.000Z</pubTime>
+        
+        <tag>model</tag>
+         
+        <tag>Random Forest</tag>
+         
+        <tag>GBDT</tag>
+         
+         
+           
+             
+              <breadCrumb title="model" url="https://mjp1124.github.io/categories/model/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://mjp1124.github.io/2017/03/10/blog_memo/</loc>
+    <lastmod>2017-09-26T11:28:30.997Z</lastmod>
+    <data>
+        <display>
+        <title>生成博客过程中的小问题</title>
+        <pubTime>2017-03-09T16:00:00.000Z</pubTime>
+        
+        <tag>bolg</tag>
+         
+        <tag>github</tag>
+         
+        <tag>markdown</tag>
+         
+         
+           
+             
+              <breadCrumb title="hexo_blog" url="https://mjp1124.github.io/categories/hexo-blog/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://mjp1124.github.io/2017/05/17/email/</loc>
+    <lastmod>2017-05-25T06:29:15.596Z</lastmod>
+    <data>
+        <display>
+        <title>报告邮件自动化发送</title>
+        <pubTime>2017-05-16T16:00:00.000Z</pubTime>
+        
+        <tag>send_email</tag>
+         
+        <tag>jinja2</tag>
+         
+         
+           
+             
+              <breadCrumb title="email" url="https://mjp1124.github.io/categories/email/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+</urlset>

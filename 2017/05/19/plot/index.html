@@ -1,0 +1,876 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="plot,matplotlib," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="本文主要介绍了几种在数据展示时，常用的画图的方法 ax画图常用的参数fig,ax: 画板，用法：fig, ax = plt.subplots(figsize=(10, 5)) figsize: 表示图像大小的元组 sharex, sharey：x（y）轴共享，用法：sharex=True title: 标题 legend: 添加图例，用法：ax.legend([‘kind1’,’kind2’])">
+<meta name="keywords" content="plot,matplotlib">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据分析中利用matplotlib画图">
+<meta property="og:url" content="https://mjp1124.github.io/2017/05/19/plot/index.html">
+<meta property="og:site_name" content="Adventures in Wonderland">
+<meta property="og:description" content="本文主要介绍了几种在数据展示时，常用的画图的方法 ax画图常用的参数fig,ax: 画板，用法：fig, ax = plt.subplots(figsize=(10, 5)) figsize: 表示图像大小的元组 sharex, sharey：x（y）轴共享，用法：sharex=True title: 标题 legend: 添加图例，用法：ax.legend([‘kind1’,’kind2’])">
+<meta property="og:image" content="https://mjp1124.github.io/2017/05/19/plot/plot_9_1.png">
+<meta property="og:image" content="https://mjp1124.github.io/2017/05/19/plot/plot_13_1.png">
+<meta property="og:image" content="https://mjp1124.github.io/2017/05/19/plot/plot_16_1.png">
+<meta property="og:image" content="https://mjp1124.github.io/2017/05/19/plot/plot_20_0.png">
+<meta property="og:updated_time" content="2017-12-08T08:13:50.502Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据分析中利用matplotlib画图">
+<meta name="twitter:description" content="本文主要介绍了几种在数据展示时，常用的画图的方法 ax画图常用的参数fig,ax: 画板，用法：fig, ax = plt.subplots(figsize=(10, 5)) figsize: 表示图像大小的元组 sharex, sharey：x（y）轴共享，用法：sharex=True title: 标题 legend: 添加图例，用法：ax.legend([‘kind1’,’kind2’])">
+<meta name="twitter:image" content="https://mjp1124.github.io/2017/05/19/plot/plot_9_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://mjp1124.github.io/2017/05/19/plot/"/>
+
+
+
+
+
+  <title>数据分析中利用matplotlib画图 | Adventures in Wonderland</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Adventures in Wonderland</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://mjp1124.github.io/2017/05/19/plot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Icey">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures in Wonderland">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据分析中利用matplotlib画图</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-19T00:00:00+08:00">
+                2017-05-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/analysis/" itemprop="url" rel="index">
+                    <span itemprop="name">analysis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文主要介绍了几种在数据展示时，常用的画图的方法</p>
+<h1 id="ax画图常用的参数"><a href="#ax画图常用的参数" class="headerlink" title="ax画图常用的参数"></a>ax画图常用的参数</h1><p>fig,ax: 画板，用法：fig, ax = plt.subplots(figsize=(10, 5))</p>
+<p>figsize: 表示图像大小的元组</p>
+<p>sharex, sharey：x（y）轴共享，用法：sharex=True</p>
+<p>title: 标题</p>
+<p>legend: 添加图例，用法：ax.legend([‘kind1’,’kind2’])</p>
+<a id="more"></a>
+<p>xticks，yticks: x(y)轴的显示备注，用法：ax.set_yticks(‘人数’)</p>
+<p>xticklabels: x轴标签内容，用法：ax.set_xticklabels([‘kind1’,’kind2’])</p>
+<p>xlim，ylim: x(y)轴刻度的上下限，用法 ax.set_xlim(0, 1)</p>
+<p>fontsize: 字体大小</p>
+<p>colormap: 颜色</p>
+<p>alpha: 透明度</p>
+<p>sort_columns: 按照字母顺序绘制，默认使用当前列顺序</p>
+<p>grid: 轴网格线，默认打开</p>
+<p>bins: 柱子的数量</p>
+<h1 id="matplotlib中的常用图形"><a href="#matplotlib中的常用图形" class="headerlink" title="matplotlib中的常用图形"></a>matplotlib中的常用图形</h1><p>line: 线形图</p>
+<p>bar: 垂直柱状图，stacked=True时是堆积柱状图</p>
+<p>barh: 水平柱状图</p>
+<p>kde: 核密度估计图</p>
+<p>hist: 频率分布直方图</p>
+<p>area: 面积图</p>
+<h1 id="matplotlib画图"><a href="#matplotlib画图" class="headerlink" title="matplotlib画图"></a>matplotlib画图</h1><h2 id="导入需要的包"><a href="#导入需要的包" class="headerlink" title="导入需要的包"></a>导入需要的包</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> matplotlib</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">from</span> matplotlib.ticker <span class="keyword">import</span> FuncFormatter</div><div class="line"><span class="keyword">import</span> seaborn</div><div class="line">plt.rcParams[<span class="string">'font.family'</span>]=<span class="string">"Droid Sans Fallback"</span><span class="comment">#显示中文字体</span></div><div class="line">plt.rcParams[<span class="string">'axes.unicode_minus'</span>] = <span class="keyword">False</span><span class="comment">#解决负号显示错误问题</span></div><div class="line"><span class="keyword">from</span> IPython.core.display <span class="keyword">import</span> HTML,display</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pandas <span class="keyword">import</span> DataFrame</div><div class="line">df = DataFrame(&#123;<span class="string">'kind'</span>:[<span class="string">'kind1'</span>,<span class="string">'kind2'</span>,<span class="string">'kind3'</span>],<span class="string">'num1'</span>:[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],<span class="string">'num2'</span>:[<span class="number">0.4</span>,<span class="number">0.5</span>,<span class="number">0.6</span>]&#125;)</div><div class="line">df</div></pre></td></tr></table></figure>
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>kind</th>
+      <th>num1</th>
+      <th>num2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>kind1</td>
+      <td>1</td>
+      <td>0.4</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>kind2</td>
+      <td>2</td>
+      <td>0.5</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>kind3</td>
+      <td>3</td>
+      <td>0.6</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="柱状图"><a href="#柱状图" class="headerlink" title="柱状图"></a>柱状图</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">display(HTML(<span class="string">'&lt;h2&gt;&#123;col&#125;&lt;/h2&gt;'</span>.format(col = <span class="string">'柱形图结果'</span>)))</div><div class="line">ax=df.plot(kind=<span class="string">'bar'</span>,figsize=(<span class="number">10</span>,<span class="number">4</span>),title=<span class="string">'柱形图'</span>,grid=<span class="keyword">False</span>);</div><div class="line">ax.set_ylabel(<span class="string">"人数"</span>);</div><div class="line">ax.set_xlabel(<span class="string">'种类'</span>);</div><div class="line">x_labels=list(df[<span class="string">'kind'</span>]);</div><div class="line">ax.set_xticklabels(x_labels,rotation=<span class="number">0</span>)<span class="comment">#rotation为刻度旋转的角度;</span></div><div class="line"><span class="comment"># formatter = FuncFormatter(to_percent);</span></div><div class="line"><span class="comment"># ax.yaxis.set_major_formatter(formatter);</span></div><div class="line">    </div><div class="line">rects=ax.patches;</div><div class="line">plt.show();</div><div class="line">plt.close();</div></pre></td></tr></table></figure>
+<h2>柱形图结果</h2>
+
+
+<img src="/2017/05/19/plot/plot_9_1.png" alt="图1" title="图1"> 
+<h2 id="带数字的柱状图，并把值改成百分比显示"><a href="#带数字的柱状图，并把值改成百分比显示" class="headerlink" title="带数字的柱状图，并把值改成百分比显示"></a>带数字的柱状图，并把值改成百分比显示</h2><ul>
+<li>此处定义了一个函数，目的是将数字转化成百分比形式</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_percent</span><span class="params">(y, position)</span>:</span></div><div class="line">    s = str(<span class="number">100</span> * y)</div><div class="line">    <span class="keyword">if</span> matplotlib.rcParams[<span class="string">'text.usetex'</span>] <span class="keyword">is</span> <span class="keyword">True</span>:</div><div class="line">        <span class="keyword">return</span> s + <span class="string">r'$\%$'</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> s + <span class="string">'%'</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">display(HTML(<span class="string">'&lt;h2&gt;&#123;col&#125;&lt;/h2&gt;'</span>.format(col = <span class="string">'百分比柱状图结果'</span>)))</div><div class="line">fig, ax = plt.subplots(figsize=(<span class="number">10</span>, <span class="number">5</span>))</div><div class="line">df[<span class="string">'num2'</span>].plot(kind=<span class="string">'bar'</span>,title=<span class="string">'带数字的柱状图'</span>,color=<span class="string">'orange'</span>,alpha=<span class="number">0.7</span>,grid=<span class="keyword">False</span>)</div><div class="line">x_labels = list(df[<span class="string">'kind'</span>])</div><div class="line">ax.set_xticklabels(x_labels, rotation=<span class="number">0</span>)</div><div class="line">rects = ax.patches</div><div class="line">labels = list(df[<span class="string">'num2'</span>])</div><div class="line"><span class="keyword">for</span> rect, label <span class="keyword">in</span> zip(rects, labels):</div><div class="line"></div><div class="line">    height = rect.get_height()</div><div class="line">    ax.text(rect.get_x() + rect.get_width()/ <span class="number">2</span>, height/<span class="number">2</span>, label, ha=<span class="string">'center'</span>, va=<span class="string">'bottom'</span>)</div><div class="line"><span class="comment">#可以设置y轴的上限，我这里设置为要画图的数据中的最大值+最大值/10    </span></div><div class="line">yl = max(labels) + (max(labels) / <span class="number">10</span>)</div><div class="line">plt.ylim(<span class="number">0</span>, yl)</div><div class="line"></div><div class="line"><span class="comment"># y轴变成百分比</span></div><div class="line">formatter = FuncFormatter(to_percent)</div><div class="line">plt.gca().yaxis.set_major_formatter(formatter)</div><div class="line"></div><div class="line">plt.show();</div><div class="line">plt.close();</div></pre></td></tr></table></figure>
+<h2>百分比柱状图结果</h2>
+
+
+<img src="/2017/05/19/plot/plot_13_1.png" alt="图2" title="图2"> 
+<h2 id="线形图"><a href="#线形图" class="headerlink" title="线形图"></a>线形图</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">display(HTML(<span class="string">'&lt;h2&gt;&#123;col&#125;&lt;/h2&gt;'</span>.format(col = <span class="string">'线形图结果'</span>)))</div><div class="line">num = list(df[<span class="string">'num1'</span>])</div><div class="line">lattice = list(np.arange(len(df)) + <span class="number">1</span>)</div><div class="line">x_xticks_label = list(df[<span class="string">'kind'</span>])</div><div class="line">fig, ax = plt.subplots(figsize=(<span class="number">10</span>, <span class="number">5</span>))</div><div class="line">plt.xticks(lattice, x_xticks_label)</div><div class="line">ax.scatter(lattice, num, color=<span class="string">'mediumseagreen'</span>)</div><div class="line">ax.plot(lattice, num, color=<span class="string">'mediumseagreen'</span>)</div><div class="line"><span class="comment">#此时图片已经画出来了，可以在相应为位置添加数字</span></div><div class="line"><span class="keyword">for</span> i, txt <span class="keyword">in</span> enumerate(num):</div><div class="line">    ax.annotate(txt, (lattice[i], num[i]))<span class="comment">#括号中的参数为（要添加的数字，对应的x的位置，对应的y的位置）</span></div><div class="line">plt.show();</div><div class="line">plt.close();</div></pre></td></tr></table></figure>
+<h2>线形图结果</h2>
+
+
+<img src="/2017/05/19/plot/plot_16_1.png" alt="图3" title="图3"> 
+<h2 id="两类占比对比柱形图"><a href="#两类占比对比柱形图" class="headerlink" title="两类占比对比柱形图"></a>两类占比对比柱形图</h2><ul>
+<li>True和False的值相加为1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">from</span> pandas <span class="keyword">import</span> DataFrame</div><div class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</div><div class="line">sns.set(style=<span class="string">"whitegrid"</span>)</div><div class="line"><span class="keyword">from</span> matplotlib.pyplot <span class="keyword">import</span> plot, figure, rc</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">plt.rcParams[<span class="string">'font.family'</span>] = <span class="string">"Droid Sans Fallback"</span></div><div class="line">plt.rcParams[<span class="string">'xtick.labelsize'</span>] = <span class="number">12</span></div><div class="line">plt.rcParams[<span class="string">'ytick.labelsize'</span>] = <span class="number">12</span></div><div class="line">plt.rcParams[<span class="string">'axes.titlesize'</span>] = <span class="number">16</span></div><div class="line">plt.rcParams[<span class="string">'figure.titlesize'</span>] = <span class="number">20</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df = DataFrame(&#123;<span class="string">'kind'</span>:[<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>],<span class="string">'False'</span>:[<span class="number">0.1</span>,<span class="number">0.9</span>,<span class="number">0.5</span>],<span class="string">'True'</span>:[<span class="number">0.9</span>,<span class="number">0.1</span>,<span class="number">0.5</span>]&#125;)[[<span class="string">'kind'</span>,<span class="string">'True'</span>,<span class="string">'False'</span>]]</div><div class="line">df</div></pre></td></tr></table></figure>
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>kind</th>
+      <th>True</th>
+      <th>False</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>a</td>
+      <td>0.9</td>
+      <td>0.1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>b</td>
+      <td>0.1</td>
+      <td>0.9</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>c</td>
+      <td>0.5</td>
+      <td>0.5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">fig, ax = plt.subplots(figsize=(<span class="number">10</span>, <span class="number">5</span>))</div><div class="line">v_values = range(len(df)+<span class="number">1</span>)</div><div class="line"></div><div class="line">ax.set_yticks(v_values)</div><div class="line">ax.set_ylim(<span class="number">0</span><span class="number">-1</span>/<span class="number">2</span>,len(df)<span class="number">-1</span>/<span class="number">2</span>)</div><div class="line">ax.set_xlim(<span class="number">0</span>, <span class="number">1</span>)</div><div class="line"></div><div class="line">height=<span class="number">1</span></div><div class="line">x = list(df[<span class="string">'False'</span>])</div><div class="line">j=<span class="number">0</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> x:        </div><div class="line">    y=<span class="number">1</span>-i</div><div class="line">    </div><div class="line">    plt.barh(bottom=j-height/<span class="number">2</span>,width=i,height=height,color=<span class="string">'orange'</span>,alpha=<span class="number">0.7</span>)<span class="comment">#alpha:透明度</span></div><div class="line">    plt.barh(bottom=j-height/<span class="number">2</span>,width=y,left=i,height=height,color=<span class="string">'green'</span>,alpha=<span class="number">0.7</span>)</div><div class="line"></div><div class="line">    ax.text(i/<span class="number">2</span>,j,i, ha=<span class="string">'center'</span>, va=<span class="string">'bottom'</span>)<span class="comment">#先注明x显示的位置（x轴位置，y轴位置，要显示的值，...)</span></div><div class="line">    ax.text(i+y/<span class="number">2</span>,j,y, ha=<span class="string">'center'</span>, va=<span class="string">'bottom'</span>)</div><div class="line"></div><div class="line">    j+=height</div><div class="line"></div><div class="line"><span class="comment"># ax.legend(['False','True']</span></div><div class="line">plt.show();</div><div class="line">plt.close();</div></pre></td></tr></table></figure>
+<img src="/2017/05/19/plot/plot_20_0.png" alt="图4" title="图4"> 
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/plot/" rel="tag"># plot</a>
+          
+            <a href="/tags/matplotlib/" rel="tag"># matplotlib</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/18/pandas/" rel="next" title="利用pandas进行数据分析的常用小功能">
+                <i class="fa fa-chevron-left"></i> 利用pandas进行数据分析的常用小功能
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/23/model/" rel="prev" title="随机森林与GBDT简单对比及代码样例">
+                随机森林与GBDT简单对比及代码样例 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Icey" />
+          <p class="site-author-name" itemprop="name">Icey</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ax画图常用的参数"><span class="nav-number">1.</span> <span class="nav-text">ax画图常用的参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#matplotlib中的常用图形"><span class="nav-number">2.</span> <span class="nav-text">matplotlib中的常用图形</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#matplotlib画图"><span class="nav-number">3.</span> <span class="nav-text">matplotlib画图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#导入需要的包"><span class="nav-number">3.1.</span> <span class="nav-text">导入需要的包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#柱状图"><span class="nav-number">3.2.</span> <span class="nav-text">柱状图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.3.</span> <span class="nav-text">柱形图结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#带数字的柱状图，并把值改成百分比显示"><span class="nav-number">3.4.</span> <span class="nav-text">带数字的柱状图，并把值改成百分比显示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.5.</span> <span class="nav-text">百分比柱状图结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线形图"><span class="nav-number">3.6.</span> <span class="nav-text">线形图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.7.</span> <span class="nav-text">线形图结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两类占比对比柱形图"><span class="nav-number">3.8.</span> <span class="nav-text">两类占比对比柱形图</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Icey</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

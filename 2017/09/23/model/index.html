@@ -1,0 +1,1608 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="model,Random Forest,GBDT," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="本文简单对比了随机森林与GBDT模型的优缺点，并列举了两种模型的样例的模型效果 随机森林(Random Forest) 随机森林指的是利用多棵树对样本进行训练并预测的一种分类器，随机森林的每一棵决策树之间是没有关联的  优缺点优点 在数据集上表现良好 方差和偏差都比较低，泛化性能优越 在创建随机森林的时候，对generlization error使用的是无偏估计 它能够处理很高维度（feature">
+<meta name="keywords" content="model,Random Forest,GBDT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="随机森林与GBDT简单对比及代码样例">
+<meta property="og:url" content="https://mjp1124.github.io/2017/09/23/model/index.html">
+<meta property="og:site_name" content="Adventures in Wonderland">
+<meta property="og:description" content="本文简单对比了随机森林与GBDT模型的优缺点，并列举了两种模型的样例的模型效果 随机森林(Random Forest) 随机森林指的是利用多棵树对样本进行训练并预测的一种分类器，随机森林的每一棵决策树之间是没有关联的  优缺点优点 在数据集上表现良好 方差和偏差都比较低，泛化性能优越 在创建随机森林的时候，对generlization error使用的是无偏估计 它能够处理很高维度（feature">
+<meta property="og:image" content="https://mjp1124.github.io/2017/09/23/model/描述.png">
+<meta property="og:image" content="https://mjp1124.github.io/2017/09/23/model/model_15_0.png">
+<meta property="og:image" content="https://mjp1124.github.io/2017/09/23/model/model_18_0.png">
+<meta property="og:image" content="https://mjp1124.github.io/2017/09/23/model/model_21_0.png">
+<meta property="og:image" content="https://mjp1124.github.io/2017/09/23/model/model_22_0.png">
+<meta property="og:image" content="https://mjp1124.github.io/2017/09/23/model/model_26_0.png">
+<meta property="og:image" content="https://mjp1124.github.io/2017/09/23/model/model_38_0.png">
+<meta property="og:image" content="https://mjp1124.github.io/2017/09/23/model/model_41_0.png">
+<meta property="og:image" content="https://mjp1124.github.io/2017/09/23/model/model_44_0.png">
+<meta property="og:image" content="https://mjp1124.github.io/2017/09/23/model/model_45_0.png">
+<meta property="og:image" content="https://mjp1124.github.io/2017/09/23/model/model_47_0.png">
+<meta property="og:updated_time" content="2017-12-05T09:03:12.498Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="随机森林与GBDT简单对比及代码样例">
+<meta name="twitter:description" content="本文简单对比了随机森林与GBDT模型的优缺点，并列举了两种模型的样例的模型效果 随机森林(Random Forest) 随机森林指的是利用多棵树对样本进行训练并预测的一种分类器，随机森林的每一棵决策树之间是没有关联的  优缺点优点 在数据集上表现良好 方差和偏差都比较低，泛化性能优越 在创建随机森林的时候，对generlization error使用的是无偏估计 它能够处理很高维度（feature">
+<meta name="twitter:image" content="https://mjp1124.github.io/2017/09/23/model/描述.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://mjp1124.github.io/2017/09/23/model/"/>
+
+
+
+
+
+  <title>随机森林与GBDT简单对比及代码样例 | Adventures in Wonderland</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Adventures in Wonderland</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://mjp1124.github.io/2017/09/23/model/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Icey">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures in Wonderland">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">随机森林与GBDT简单对比及代码样例</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-23T00:00:00+08:00">
+                2017-09-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/model/" itemprop="url" rel="index">
+                    <span itemprop="name">model</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文简单对比了随机森林与GBDT模型的优缺点，并列举了两种模型的样例的模型效果</p>
+<h1 id="随机森林-Random-Forest"><a href="#随机森林-Random-Forest" class="headerlink" title="随机森林(Random Forest)"></a>随机森林(Random Forest)</h1><ul>
+<li>随机森林指的是利用多棵树对样本进行训练并预测的一种分类器，随机森林的每一棵决策树之间是没有关联的</li>
+</ul>
+<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ul>
+<li>在数据集上表现良好</li>
+<li>方差和偏差都比较低，泛化性能优越</li>
+<li>在创建随机森林的时候，对generlization error使用的是无偏估计</li>
+<li>它能够处理很高维度（feature很多）的数据，并且不用做特征选择</li>
+<li>在训练完后，能够输出特征（feature）的重要性程度，非常实用    </li>
+<li>高度并行化，易于分布式实现，训练速度快</li>
+<li>在训练过程中，能够检测到feature间的互相影响</li>
+<li>由于是树模型 ，不需要归一化即可之间使用，实现比较简单  </li>
+</ul>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ul>
+<li>随机森林在某些噪音较大的分类或回归问题上会过拟合</li>
+<li>分裂的时候，偏向于选择取值较多的特征</li>
+<li>忽略属性之间的相关性<a id="more"></a>
+<h2 id="代码样例"><a href="#代码样例" class="headerlink" title="代码样例"></a>代码样例</h2></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> warnings</div><div class="line">warnings.filterwarnings(<span class="string">'ignore'</span>)</div><div class="line"></div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">from</span> pandas <span class="keyword">import</span> DataFrame</div><div class="line"></div><div class="line">model_data = pd.read_csv(<span class="string">'model_data.csv'</span>)</div></pre></td></tr></table></figure>
+<h3 id="查看数据情况（数据清洗过程已忽略）"><a href="#查看数据情况（数据清洗过程已忽略）" class="headerlink" title="查看数据情况（数据清洗过程已忽略）"></a>查看数据情况（数据清洗过程已忽略）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">model_data.head()</div></pre></td></tr></table></figure>
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Var1</th>
+      <th>Var2</th>
+      <th>Var3</th>
+      <th>Var4</th>
+      <th>Var5</th>
+      <th>Var6</th>
+      <th>Var7</th>
+      <th>Var8</th>
+      <th>Var9</th>
+      <th>Var10</th>
+      <th>…</th>
+      <th>Var36</th>
+      <th>Var37</th>
+      <th>Var38</th>
+      <th>Var39</th>
+      <th>Var40</th>
+      <th>Var41</th>
+      <th>Var42</th>
+      <th>Var43</th>
+      <th>Var44</th>
+      <th>tag_y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>3</td>
+      <td>703</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>1</td>
+      <td>…</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>11</td>
+      <td>37</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>3</td>
+      <td>57</td>
+      <td>2</td>
+      <td>51</td>
+      <td>91</td>
+      <td>2</td>
+      <td>…</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>11</td>
+      <td>46</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>3</td>
+      <td>0</td>
+      <td>-1</td>
+      <td>3</td>
+      <td>815</td>
+      <td>2</td>
+      <td>51</td>
+      <td>-1</td>
+      <td>1</td>
+      <td>…</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>11</td>
+      <td>40</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>5</td>
+      <td>3</td>
+      <td>354</td>
+      <td>2</td>
+      <td>51</td>
+      <td>90</td>
+      <td>1</td>
+      <td>…</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>11</td>
+      <td>39</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>-1</td>
+      <td>3</td>
+      <td>391</td>
+      <td>1</td>
+      <td>61</td>
+      <td>90</td>
+      <td>1</td>
+      <td>…</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>11</td>
+      <td>37</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 45 columns</p>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">model_data.describe()</div></pre></td></tr></table></figure>
+<img src="/2017/09/23/model/描述.png" alt="描述性统计" title="描述性统计">
+<h3 id="变量相关性检验"><a href="#变量相关性检验" class="headerlink" title="变量相关性检验"></a>变量相关性检验</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">key = <span class="string">'tag_y'</span></div><div class="line">coef_df = []</div><div class="line"><span class="keyword">for</span> col <span class="keyword">in</span> model_data.columns:</div><div class="line">    corrcoef = np.corrcoef(model_data[col],model_data[key])[<span class="number">0</span>,<span class="number">1</span>]</div><div class="line">    coef_df.append(&#123;<span class="string">'变量'</span>:col,<span class="string">'相关系数'</span>:corrcoef,<span class="string">'相关系数绝对值'</span>:abs(corrcoef)&#125;)</div><div class="line">    </div><div class="line">DataFrame(coef_df).sort_values(<span class="string">'相关系数绝对值'</span>,ascending=<span class="keyword">False</span>)</div></pre></td></tr></table></figure>
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>变量</th>
+      <th>相关系数</th>
+      <th>相关系数绝对值</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>44</th>
+      <td>tag_y</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Var24</td>
+      <td>-0.387025</td>
+      <td>0.387025</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Var17</td>
+      <td>0.210136</td>
+      <td>0.210136</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Var28</td>
+      <td>-0.157304</td>
+      <td>0.157304</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Var23</td>
+      <td>-0.150241</td>
+      <td>0.150241</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Var16</td>
+      <td>-0.095761</td>
+      <td>0.095761</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Var21</td>
+      <td>0.083199</td>
+      <td>0.083199</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Var3</td>
+      <td>-0.082515</td>
+      <td>0.082515</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Var18</td>
+      <td>-0.081642</td>
+      <td>0.081642</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Var26</td>
+      <td>-0.080799</td>
+      <td>0.080799</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Var25</td>
+      <td>-0.080647</td>
+      <td>0.080647</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Var2</td>
+      <td>-0.068508</td>
+      <td>0.068508</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Var13</td>
+      <td>-0.066173</td>
+      <td>0.066173</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Var31</td>
+      <td>-0.063315</td>
+      <td>0.063315</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>Var1</td>
+      <td>0.062513</td>
+      <td>0.062513</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Var14</td>
+      <td>-0.058684</td>
+      <td>0.058684</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Var19</td>
+      <td>0.055990</td>
+      <td>0.055990</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Var8</td>
+      <td>-0.055442</td>
+      <td>0.055442</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>Var41</td>
+      <td>0.051801</td>
+      <td>0.051801</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>Var40</td>
+      <td>0.050829</td>
+      <td>0.050829</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Var32</td>
+      <td>0.044908</td>
+      <td>0.044908</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>Var37</td>
+      <td>-0.042666</td>
+      <td>0.042666</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Var29</td>
+      <td>0.042470</td>
+      <td>0.042470</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>Var43</td>
+      <td>0.042357</td>
+      <td>0.042357</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>Var34</td>
+      <td>-0.033433</td>
+      <td>0.033433</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>Var35</td>
+      <td>-0.031154</td>
+      <td>0.031154</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>Var33</td>
+      <td>0.029990</td>
+      <td>0.029990</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Var12</td>
+      <td>-0.025125</td>
+      <td>0.025125</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Var15</td>
+      <td>0.024673</td>
+      <td>0.024673</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Var10</td>
+      <td>0.023796</td>
+      <td>0.023796</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Var4</td>
+      <td>-0.017289</td>
+      <td>0.017289</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Var6</td>
+      <td>-0.016744</td>
+      <td>0.016744</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>Var38</td>
+      <td>-0.016197</td>
+      <td>0.016197</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Var11</td>
+      <td>0.015352</td>
+      <td>0.015352</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Var5</td>
+      <td>0.014266</td>
+      <td>0.014266</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Var7</td>
+      <td>-0.013188</td>
+      <td>0.013188</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Var20</td>
+      <td>-0.013174</td>
+      <td>0.013174</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>Var42</td>
+      <td>-0.012301</td>
+      <td>0.012301</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Var22</td>
+      <td>-0.010746</td>
+      <td>0.010746</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Var9</td>
+      <td>0.010663</td>
+      <td>0.010663</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>Var36</td>
+      <td>0.009791</td>
+      <td>0.009791</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>Var44</td>
+      <td>-0.006633</td>
+      <td>0.006633</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Var27</td>
+      <td>-0.004636</td>
+      <td>0.004636</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Var30</td>
+      <td>0.002331</td>
+      <td>0.002331</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>Var39</td>
+      <td>-0.000359</td>
+      <td>0.000359</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<h3 id="随机森林建模"><a href="#随机森林建模" class="headerlink" title="随机森林建模"></a>随机森林建模</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</div><div class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestClassifier</div><div class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> array, linspace, infty</div><div class="line"></div><div class="line">Y = array(model_data[key])</div><div class="line">X = model_data.drop(key,axis=<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="comment">## 数据切割成训练集和测试集（此处比例选择的是8:2）</span></div><div class="line"></div><div class="line">X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=<span class="number">0.2</span>, random_state=<span class="number">42</span>)</div><div class="line"></div><div class="line"><span class="comment">## 模型的各项参数</span></div><div class="line">model_config = &#123;</div><div class="line">    <span class="string">'model'</span>: RandomForestClassifier,</div><div class="line">    <span class="comment">#     'args':</span></div><div class="line">    <span class="string">'kargs'</span>:&#123;</div><div class="line">        <span class="string">'n_estimators'</span>: <span class="number">1000</span>,</div><div class="line">        <span class="string">'class_weight'</span>: <span class="string">'balanced'</span>,</div><div class="line">        <span class="string">'max_features'</span>: <span class="string">'auto'</span>,</div><div class="line">        <span class="string">'max_depth'</span>: <span class="number">5</span>,</div><div class="line">        <span class="string">'min_samples_leaf'</span>: <span class="number">100</span>,</div><div class="line">        <span class="string">'random_state'</span>:<span class="number">33</span>,</div><div class="line">        <span class="string">'bootstrap'</span>: <span class="keyword">True</span>,</div><div class="line">        <span class="string">'oob_score'</span>: <span class="keyword">True</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">model = model_config[<span class="string">'model'</span>]</div><div class="line">other_args = model_config[<span class="string">'kargs'</span>]</div><div class="line"></div><div class="line"><span class="comment">#告诉模型参数</span></div><div class="line">clf = model(**other_args)</div><div class="line">clf</div><div class="line"></div><div class="line"><span class="comment">## 训练模型，喂数据</span></div><div class="line">clf = clf.fit(X_train, y_train)</div><div class="line"></div><div class="line">clf.oob_score_ <span class="comment">#验证集上的准确率（非测试集、非训练集）</span></div></pre></td></tr></table></figure>
+<pre><code>0.67633816908454225
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">## 变量重要性输出</span></div><div class="line">importance = pd.DataFrame(&#123;<span class="string">'dummy_variable'</span>:X_train.columns, <span class="string">'importance'</span>:clf.feature_importances_&#125;)\</div><div class="line">    .sort_values(<span class="string">'importance'</span>, ascending=<span class="keyword">False</span>)</div><div class="line">importance[<span class="string">'importance'</span>] = importance[<span class="string">'importance'</span>].apply(<span class="keyword">lambda</span> x: round(x, <span class="number">3</span>))</div><div class="line"></div><div class="line">importance</div></pre></td></tr></table></figure>
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dummy_variable</th>
+      <th>importance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>23</th>
+      <td>Var24</td>
+      <td>0.435</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Var17</td>
+      <td>0.127</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Var16</td>
+      <td>0.090</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Var28</td>
+      <td>0.076</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Var23</td>
+      <td>0.053</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Var14</td>
+      <td>0.024</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Var18</td>
+      <td>0.021</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Var26</td>
+      <td>0.020</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Var21</td>
+      <td>0.019</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Var6</td>
+      <td>0.016</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Var27</td>
+      <td>0.014</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>Var43</td>
+      <td>0.012</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Var31</td>
+      <td>0.010</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Var3</td>
+      <td>0.009</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>Var42</td>
+      <td>0.007</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Var9</td>
+      <td>0.006</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>Var1</td>
+      <td>0.006</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Var8</td>
+      <td>0.006</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Var2</td>
+      <td>0.005</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Var19</td>
+      <td>0.004</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Var29</td>
+      <td>0.004</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Var4</td>
+      <td>0.004</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Var13</td>
+      <td>0.004</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Var12</td>
+      <td>0.003</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>Var40</td>
+      <td>0.003</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Var25</td>
+      <td>0.003</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Var7</td>
+      <td>0.003</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Var15</td>
+      <td>0.003</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Var11</td>
+      <td>0.003</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Var22</td>
+      <td>0.003</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>Var41</td>
+      <td>0.002</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>Var37</td>
+      <td>0.002</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>Var34</td>
+      <td>0.001</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Var10</td>
+      <td>0.001</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Var30</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>Var44</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Var32</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>Var38</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>Var35</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>Var33</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>Var36</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>Var39</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Var5</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Var20</td>
+      <td>0.000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">## 测试数据的y预测值</span></div><div class="line">y_pred_prob = clf.predict_proba(X_test)[:,<span class="number">1</span>]</div><div class="line"></div><div class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> roc_curve, auc, roc_auc_score,precision_recall_curve, f1_score</div><div class="line"></div><div class="line">fpr, tpr, threshold = roc_curve(y_test, y_pred_prob)<span class="comment"># fpr:false positive rate;tpr:true positive rate</span></div></pre></td></tr></table></figure>
+<h3 id="AUC值和ROC曲线"><a href="#AUC值和ROC曲线" class="headerlink" title="AUC值和ROC曲线"></a>AUC值和ROC曲线</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">roc_auc = auc(fpr, tpr)</div><div class="line">roc_auc</div></pre></td></tr></table></figure>
+<pre><code>0.79153905777374467
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">%matplotlib inline</div><div class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</div><div class="line">sns.set(style=<span class="string">"whitegrid"</span>)</div><div class="line"><span class="keyword">from</span> matplotlib.pyplot <span class="keyword">import</span> plot, figure, rc</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line">plt.rcParams[<span class="string">'font.family'</span>] = <span class="string">"Microsoft YaHei"</span><span class="comment">#"Droid Sans Fallback"#</span></div><div class="line">plt.rcParams[<span class="string">'xtick.labelsize'</span>] = <span class="number">16</span></div><div class="line">plt.rcParams[<span class="string">'ytick.labelsize'</span>] = <span class="number">16</span></div><div class="line">plt.rcParams[<span class="string">'axes.titlesize'</span>] = <span class="number">16</span></div><div class="line">plt.rcParams[<span class="string">'figure.titlesize'</span>] = <span class="number">20</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">plt.figure()</div><div class="line">lw = <span class="number">2</span></div><div class="line">plt.plot(fpr, tpr, color=<span class="string">'darkorange'</span>,</div><div class="line">         lw=lw, label=<span class="string">'ROC curve (area = %0.2f)'</span> % roc_auc)</div><div class="line">plt.plot([<span class="number">0</span>, <span class="number">1</span>], [<span class="number">0</span>, <span class="number">1</span>], color=<span class="string">'navy'</span>, lw=lw, linestyle=<span class="string">'--'</span>)</div><div class="line">plt.xlim([<span class="number">0.0</span>, <span class="number">1.0</span>])</div><div class="line">plt.ylim([<span class="number">0.0</span>, <span class="number">1.05</span>])</div><div class="line">plt.xlabel(<span class="string">'False Positive Rate'</span>)</div><div class="line">plt.ylabel(<span class="string">'True Positive Rate'</span>)</div><div class="line">plt.title(<span class="string">'ROC曲线'</span>)</div><div class="line">plt.legend(loc=<span class="string">"lower right"</span>)</div><div class="line">plt.show()</div><div class="line">plt.savefig(<span class="string">'随机森林ROC曲线.png'</span>)</div></pre></td></tr></table></figure>
+<img src="/2017/09/23/model/model_15_0.png" alt="随机森林ROC曲线" title="随机森林ROC曲线"> 
+<h3 id="K-S值和K-S曲线"><a href="#K-S值和K-S曲线" class="headerlink" title="K-S值和K-S曲线"></a>K-S值和K-S曲线</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ks = tpr-fpr</div><div class="line"></div><div class="line">max(ks)</div></pre></td></tr></table></figure>
+<pre><code>0.47769207501512401
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">plt.figure()</div><div class="line">lw = <span class="number">2</span></div><div class="line">plt.plot(threshold, ks, color=<span class="string">'darkorange'</span>,</div><div class="line">         lw=lw, label=<span class="string">'KS curve (max = %0.2f)'</span> % max(ks))</div><div class="line"><span class="comment"># plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')</span></div><div class="line">plt.xlim([<span class="number">0.0</span>, <span class="number">1.0</span>])</div><div class="line">plt.ylim([<span class="number">0.0</span>, <span class="number">1.05</span>])</div><div class="line">plt.xlabel(<span class="string">'Threshold'</span>)</div><div class="line">plt.ylabel(<span class="string">'K-S value'</span>)</div><div class="line">plt.title(<span class="string">'K-S曲线'</span>)</div><div class="line">plt.legend(loc=<span class="string">"lower right"</span>)</div><div class="line">plt.show()</div><div class="line">plt.savefig(<span class="string">'随机森林KS曲线.png'</span>)</div></pre></td></tr></table></figure>
+<img src="/2017/09/23/model/model_18_0.png" alt="随机森林KS曲线" title="随机森林KS曲线"> 
+<h3 id="PRC曲线与f1-score曲线"><a href="#PRC曲线与f1-score曲线" class="headerlink" title="PRC曲线与f1_score曲线"></a>PRC曲线与f1_score曲线</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">precision, recall, threshold_pr = precision_recall_curve(y_test, y_pred_prob)</div><div class="line">f1_score_ = <span class="number">2</span>*recall*precision/(precision + recall)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">plt.figure()</div><div class="line">lw = <span class="number">2</span></div><div class="line">plt.plot(recall,precision , color=<span class="string">'darkorange'</span>,</div><div class="line">         lw=lw, label=<span class="string">'PRC curve'</span>)</div><div class="line">plt.xlim([<span class="number">0.0</span>, <span class="number">1.0</span>])</div><div class="line">plt.ylim([<span class="number">0.0</span>, <span class="number">1.05</span>])</div><div class="line">plt.xlabel(<span class="string">'Recall Rate'</span>)</div><div class="line">plt.ylabel(<span class="string">'Precision Rate'</span>)</div><div class="line">plt.title(<span class="string">'PRC曲线'</span>)</div><div class="line">plt.legend(loc=<span class="string">"lower right"</span>)</div><div class="line">plt.show()</div><div class="line">plt.savefig(<span class="string">'随机森林PRC曲线.png'</span>)</div></pre></td></tr></table></figure>
+<img src="/2017/09/23/model/model_21_0.png" alt="随机森林PRC曲线" title="随机森林PRC曲线"> 
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">plt.figure()</div><div class="line">lw = <span class="number">2</span></div><div class="line">plt.plot(threshold_pr, f1_score_[:<span class="number">-1</span>] ,color=<span class="string">'darkorange'</span>,</div><div class="line">         lw=lw, label=<span class="string">'f1_score curve'</span>)</div><div class="line">plt.xlim([<span class="number">0.0</span>, <span class="number">1.0</span>])</div><div class="line">plt.ylim([<span class="number">0.0</span>, <span class="number">1.05</span>])</div><div class="line">plt.xlabel(<span class="string">'threshold'</span>)</div><div class="line">plt.ylabel(<span class="string">'f1_score'</span>)</div><div class="line">plt.title(<span class="string">'f1_score曲线'</span>)</div><div class="line">plt.legend(loc=<span class="string">"middle right"</span>)</div><div class="line">plt.show()</div><div class="line">plt.savefig(<span class="string">'随机森林f1_score曲线.png'</span>)</div></pre></td></tr></table></figure>
+<img src="/2017/09/23/model/model_22_0.png" alt="随机森林f1_score曲线" title="随机森林f1_score曲线"> 
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">max(f1_score_)</div></pre></td></tr></table></figure>
+<pre><code>0.63074901445466491
+</code></pre><h3 id="阈值与留存"><a href="#阈值与留存" class="headerlink" title="阈值与留存"></a>阈值与留存</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> jfdata.utilities.model_evaluation <span class="keyword">import</span> evaluate_binary_classifer</div><div class="line"><span class="keyword">from</span> jfdata.utilities.visualization <span class="keyword">import</span> line_plot</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">score_df = pd.DataFrame(&#123;<span class="string">'y'</span>:pd.Series(y_test).map(&#123;<span class="number">1</span>:<span class="keyword">True</span>, <span class="number">0</span>:<span class="keyword">False</span>&#125;), <span class="string">'prob'</span>:y_pred_prob&#125;)</div><div class="line"></div><div class="line">score_df[(<span class="keyword">True</span>, <span class="keyword">True</span>)] = <span class="number">0</span></div><div class="line">score_df[(<span class="keyword">True</span>, <span class="keyword">False</span>)] = <span class="number">1</span></div><div class="line">score_df[(<span class="keyword">False</span>, <span class="keyword">False</span>)] = <span class="number">1</span></div><div class="line">score_df[(<span class="keyword">False</span>, <span class="keyword">True</span>)] = <span class="number">0</span></div><div class="line"></div><div class="line">s = evaluate_binary_classifer(score_df, <span class="number">20</span>)</div><div class="line"></div><div class="line">anatations =  [<span class="string">'&#123;0:0.2f&#125;%'</span>.format(<span class="number">100</span>*rate) <span class="keyword">for</span> rate <span class="keyword">in</span> s[<span class="string">'target_rate'</span>]]</div><div class="line">plot_x = s.threshold</div><div class="line">plot_y = s.score</div><div class="line">x_label = <span class="string">'风险度阈值'</span></div><div class="line">y_label = <span class="string">'留存数量'</span></div><div class="line">title = <span class="string">'不同的风险阈值对留存的正常用户和bad占比的影响'</span></div><div class="line"></div><div class="line">f1 = line_plot(plot_x, plot_y, title, x_label, y_label, anatations)</div><div class="line">plt.savefig(<span class="string">'随机森林阈值.png'</span>)</div></pre></td></tr></table></figure>
+<img src="/2017/09/23/model/model_26_0.png" alt="随机森林阈值" title="随机森林阈值"> 
+<h1 id="梯度提升树GBDT-Gradient-Boosting-Decision-Tree"><a href="#梯度提升树GBDT-Gradient-Boosting-Decision-Tree" class="headerlink" title="梯度提升树GBDT (Gradient Boosting Decision Tree)"></a>梯度提升树GBDT (Gradient Boosting Decision Tree)</h1><h2 id="简介-备注"><a href="#简介-备注" class="headerlink" title="简介/备注"></a>简介/备注</h2><ul>
+<li>GBDT的树都是回归树，而不是分类树，GBDT 是多棵树的输出预测值的累加</li>
+<li>在Gradient Boost中，每个新的模型的建立是为了使得之前模型的残差往梯度方向减少</li>
+<li>GDBT 由损失函数和正则化函数两部分构成:<ul>
+<li>损失函数尽可能的小，这样使得目标函数能够尽可能的符合样本</li>
+<li>正则化函数防止模型过拟合</li>
+<li>寻求损失函数和正则化函数的平衡点</li>
+</ul>
+</li>
+<li>Feature 分裂原则：<ul>
+<li>遍历所有Feature，找到每个Feature的增益最大的分裂点，并计算出每个Feature分裂点的增益</li>
+<li>取所有Feature分裂点的增益最大的Feature作为最先分裂点</li>
+<li>使用贪婪法，重复上面的过程，建立一棵完整的决策树    </li>
+</ul>
+</li>
+<li>每次分裂的目的是为了获得更多的信息增益，如果分裂后信息增益为负数，则停止分裂</li>
+</ul>
+<h2 id="优缺点-1"><a href="#优缺点-1" class="headerlink" title="优缺点"></a>优缺点</h2><h3 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h3><ul>
+<li>预测精度高</li>
+<li>能处理非线性数据、多特征类型</li>
+<li>适合低维稠密数据</li>
+<li>模型可解释行好?</li>
+<li>可以灵活处理各种类型的数据，包括连续值和离散值，不需要做特征的归一化</li>
+<li>在相对少的调参时间情况下，预测的准备率也可以比较高</li>
+<li>使用一些健壮的损失函数，对异常值的鲁棒性非常强<h3 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h3></li>
+<li>弱学习器之间存在依赖关系，难以并行训练数据,是个串行的过程</li>
+<li>计算复杂度大</li>
+<li>不使用高维稀疏特征</li>
+</ul>
+<p>gbdt使用什么损失函数？比如 Huber损失函数和Quantile损失函数；均方误差和LogLoss等</p>
+<h2 id="代码样例-1"><a href="#代码样例-1" class="headerlink" title="代码样例"></a>代码样例</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">model_config = &#123;</div><div class="line">    <span class="string">'model'</span>: RandomForestClassifier,</div><div class="line">    <span class="comment">#     'args':</span></div><div class="line">    <span class="string">'kargs'</span>:&#123;</div><div class="line">        <span class="string">'n_estimators'</span>: <span class="number">100</span>,</div><div class="line">        <span class="string">'learning_rate'</span>: <span class="number">0.1</span>,</div><div class="line">        <span class="string">'max_features'</span>: <span class="number">5</span>,</div><div class="line">        <span class="string">'max_depth'</span>: <span class="number">4</span>,</div><div class="line">        <span class="string">'min_samples_leaf'</span>: <span class="number">100</span>,</div><div class="line">        <span class="string">'random_state'</span>:<span class="number">33</span>,</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">model = model_config[<span class="string">'model'</span>]</div><div class="line">other_args = model_config[<span class="string">'kargs'</span>]</div></pre></td></tr></table></figure>
+<h3 id="GBDT建模"><a href="#GBDT建模" class="headerlink" title="GBDT建模"></a>GBDT建模</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> GradientBoostingClassifier</div><div class="line">gbdt = GradientBoostingClassifier(**other_args)</div><div class="line">gbdt.fit(X_train,y_train)</div></pre></td></tr></table></figure>
+<pre><code>GradientBoostingClassifier(criterion=&apos;friedman_mse&apos;, init=None,
+              learning_rate=0.1, loss=&apos;deviance&apos;, max_depth=4,
+              max_features=5, max_leaf_nodes=None,
+              min_impurity_split=1e-07, min_samples_leaf=100,
+              min_samples_split=2, min_weight_fraction_leaf=0.0,
+              n_estimators=100, presort=&apos;auto&apos;, random_state=33,
+              subsample=1.0, verbose=0, warm_start=False)
+</code></pre><h3 id="算法评估指标"><a href="#算法评估指标" class="headerlink" title="算法评估指标"></a>算法评估指标</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">pred_y= gbdt.predict(X_test)<span class="comment">#默认阈值为0.5</span></div><div class="line"></div><div class="line">pd.crosstab(y_test,pred_y)</div></pre></td></tr></table></figure>
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>col_0</th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+    <tr>
+      <th>row_0</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>629</td>
+      <td>67</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>147</td>
+      <td>157</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> confusion_matrix</div><div class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> classification_report</div><div class="line"><span class="keyword">from</span> pandas <span class="keyword">import</span> DataFrame</div><div class="line"></div><div class="line">print(classification_report(y_test, pred_y, digits=<span class="number">4</span>))</div></pre></td></tr></table></figure>
+<pre><code>             precision    recall  f1-score   support
+
+          0     0.8106    0.9037    0.8546       696
+          1     0.7009    0.5164    0.5947       304
+
+avg / total     0.7772    0.7860    0.7756      1000
+</code></pre><h3 id="ROC曲线"><a href="#ROC曲线" class="headerlink" title="ROC曲线"></a>ROC曲线</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">y_pred_prob = gbdt.predict_proba(X_test)[:,<span class="number">1</span>]</div><div class="line"></div><div class="line">fpr, tpr, threshold = roc_curve(y_test, y_pred_prob)<span class="comment"># fpr:false positive rate;tpr:true positive rate</span></div><div class="line"></div><div class="line">roc_auc = auc(fpr, tpr)</div><div class="line">roc_auc</div></pre></td></tr></table></figure>
+<pre><code>0.81887571839080453
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">plt.figure()</div><div class="line">lw = <span class="number">2</span></div><div class="line">plt.plot(fpr, tpr, color=<span class="string">'darkorange'</span>,</div><div class="line">         lw=lw, label=<span class="string">'ROC curve (area = %0.2f)'</span> % roc_auc)</div><div class="line">plt.plot([<span class="number">0</span>, <span class="number">1</span>], [<span class="number">0</span>, <span class="number">1</span>], color=<span class="string">'navy'</span>, lw=lw, linestyle=<span class="string">'--'</span>)</div><div class="line">plt.xlim([<span class="number">0.0</span>, <span class="number">1.0</span>])</div><div class="line">plt.ylim([<span class="number">0.0</span>, <span class="number">1.05</span>])</div><div class="line">plt.xlabel(<span class="string">'False Positive Rate'</span>)</div><div class="line">plt.ylabel(<span class="string">'True Positive Rate'</span>)</div><div class="line">plt.title(<span class="string">'ROC曲线'</span>)</div><div class="line">plt.legend(loc=<span class="string">"lower right"</span>)</div><div class="line">plt.show()</div><div class="line">plt.savefig(<span class="string">'GBDT_ROC曲线.png'</span>)</div></pre></td></tr></table></figure>
+<img src="/2017/09/23/model/model_38_0.png" alt="GBDT_ROC曲线" title="GBDT_ROC曲线"> 
+<h3 id="K-S值和K-S曲线-1"><a href="#K-S值和K-S曲线-1" class="headerlink" title="K-S值和K-S曲线"></a>K-S值和K-S曲线</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ks = tpr-fpr</div><div class="line"></div><div class="line">max(ks)</div></pre></td></tr></table></figure>
+<pre><code>0.50457501512401692
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">plt.figure()</div><div class="line">lw = <span class="number">2</span></div><div class="line">plt.plot(threshold, ks, color=<span class="string">'darkorange'</span>,</div><div class="line">         lw=lw, label=<span class="string">'KS curve (max = %0.2f)'</span> % max(ks))</div><div class="line"><span class="comment"># plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')</span></div><div class="line">plt.xlim([<span class="number">0.0</span>, <span class="number">1.0</span>])</div><div class="line">plt.ylim([<span class="number">0.0</span>, <span class="number">1.05</span>])</div><div class="line">plt.xlabel(<span class="string">'Threshold'</span>)</div><div class="line">plt.ylabel(<span class="string">'K-S value'</span>)</div><div class="line">plt.title(<span class="string">'K-S曲线'</span>)</div><div class="line">plt.legend(loc=<span class="string">"lower right"</span>)</div><div class="line">plt.show()</div><div class="line">plt.savefig(<span class="string">'GBDT_KS曲线.png'</span>)</div></pre></td></tr></table></figure>
+<img src="/2017/09/23/model/model_41_0.png" alt="GBDT_KS曲线" title="GBDT_KS曲线"> 
+<h3 id="PRC曲线与f1-score曲线-1"><a href="#PRC曲线与f1-score曲线-1" class="headerlink" title="PRC曲线与f1_score曲线"></a>PRC曲线与f1_score曲线</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">precision, recall, threshold_pr = precision_recall_curve(y_test, y_pred_prob)</div><div class="line">f1_score_ = <span class="number">2</span>*recall*precision/(precision + recall)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">plt.figure()</div><div class="line">lw = <span class="number">2</span></div><div class="line">plt.plot(recall,precision , color=<span class="string">'darkorange'</span>,</div><div class="line">         lw=lw, label=<span class="string">'PRC curve'</span>)</div><div class="line">plt.xlim([<span class="number">0.0</span>, <span class="number">1.0</span>])</div><div class="line">plt.ylim([<span class="number">0.0</span>, <span class="number">1.05</span>])</div><div class="line">plt.xlabel(<span class="string">'Recall Rate'</span>)</div><div class="line">plt.ylabel(<span class="string">'Precision Rate'</span>)</div><div class="line">plt.title(<span class="string">'PRC曲线'</span>)</div><div class="line">plt.legend(loc=<span class="string">"lower right"</span>)</div><div class="line">plt.show</div><div class="line">plt.savefig(<span class="string">'GBDT_PRC曲线.png'</span>)</div></pre></td></tr></table></figure>
+<img src="/2017/09/23/model/model_44_0.png" alt="GBDT_PRC曲线" title="GBDT_PRC曲线"> 
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">plt.figure()</div><div class="line">lw = <span class="number">2</span></div><div class="line">plt.plot(threshold_pr, f1_score_[:<span class="number">-1</span>] ,color=<span class="string">'darkorange'</span>,</div><div class="line">         lw=lw, label=<span class="string">'f1_score curve'</span>)</div><div class="line">plt.xlim([<span class="number">0.0</span>, <span class="number">1.0</span>])</div><div class="line">plt.ylim([<span class="number">0.0</span>, <span class="number">1.05</span>])</div><div class="line">plt.xlabel(<span class="string">'threshold'</span>)</div><div class="line">plt.ylabel(<span class="string">'f1_score'</span>)</div><div class="line">plt.title(<span class="string">'f1_score曲线'</span>)</div><div class="line">plt.legend(loc=<span class="string">"middle right"</span>)</div><div class="line">plt.show()</div><div class="line">plt.savefig(<span class="string">'GBDT_f1_score曲线.png'</span>)</div></pre></td></tr></table></figure>
+<img src="/2017/09/23/model/model_45_0.png" alt="GBDT_f1_score曲线" title="GBDT_f1_score曲线">
+<h3 id="阈值选取问题"><a href="#阈值选取问题" class="headerlink" title="阈值选取问题"></a>阈值选取问题</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">score_df = pd.DataFrame(&#123;<span class="string">'y'</span>:pd.Series(y_test).map(&#123;<span class="number">1</span>:<span class="keyword">True</span>, <span class="number">0</span>:<span class="keyword">False</span>&#125;), <span class="string">'prob'</span>:y_pred_prob&#125;)</div><div class="line"></div><div class="line">score_df[(<span class="keyword">True</span>, <span class="keyword">True</span>)] = <span class="number">0</span></div><div class="line">score_df[(<span class="keyword">True</span>, <span class="keyword">False</span>)] = <span class="number">1</span></div><div class="line">score_df[(<span class="keyword">False</span>, <span class="keyword">False</span>)] = <span class="number">1</span></div><div class="line">score_df[(<span class="keyword">False</span>, <span class="keyword">True</span>)] = <span class="number">0</span></div><div class="line"></div><div class="line">s = evaluate_binary_classifer(score_df, <span class="number">20</span>)</div><div class="line"></div><div class="line">anatations =  [<span class="string">'&#123;0:0.2f&#125;%'</span>.format(<span class="number">100</span>*rate) <span class="keyword">for</span> rate <span class="keyword">in</span> s[<span class="string">'target_rate'</span>]]</div><div class="line">plot_x = s.threshold</div><div class="line">plot_y = s.score</div><div class="line">f1 = line_plot(plot_x, plot_y, title, x_label, y_label, anatations)</div><div class="line">plt.savefig(<span class="string">'GBDT阈值.png'</span>)</div></pre></td></tr></table></figure>
+<img src="/2017/09/23/model/model_47_0.png" alt="GBDT阈值" title="GBDT阈值">
+<h3 id="自动调参"><a href="#自动调参" class="headerlink" title="自动调参"></a>自动调参</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.grid_search <span class="keyword">import</span> GridSearchCV</div><div class="line"><span class="keyword">from</span> sklearn.cross_validation <span class="keyword">import</span> StratifiedKFold</div><div class="line"></div><div class="line">gbdt = GradientBoostingClassifier()</div><div class="line">cross_validation = StratifiedKFold(pd.Series(y_train),n_folds = <span class="number">10</span>)</div><div class="line">parameter_grid = &#123;<span class="string">'max_depth'</span>:[<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>],</div><div class="line">                  <span class="string">'max_features'</span>:[<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">9</span>],</div><div class="line">                  <span class="string">'n_estimators'</span>:[<span class="number">100</span>,<span class="number">300</span>,<span class="number">500</span>,<span class="number">1000</span>]&#125;</div><div class="line">grid_search = GridSearchCV(gbdt,param_grid = parameter_grid,cv =cross_validation,scoring = <span class="string">'accuracy'</span>)</div><div class="line"></div><div class="line">grid_search.fit(X_train,pd.Series(y_train))</div></pre></td></tr></table></figure>
+<pre><code>GridSearchCV(cv=sklearn.cross_validation.StratifiedKFold(labels=[0 1 ..., 1 0], n_folds=10, shuffle=False, random_state=None),
+       error_score=&apos;raise&apos;,
+       estimator=GradientBoostingClassifier(criterion=&apos;friedman_mse&apos;, init=None,
+              learning_rate=0.1, loss=&apos;deviance&apos;, max_depth=3,
+              max_features=None, max_leaf_nodes=None,
+              min_impurity_split=1e-07, min_samples_leaf=1,
+              min_samples_split=2, min_weight_fraction_leaf=0.0,
+              n_estimators=100, presort=&apos;auto&apos;, random_state=None,
+              subsample=1.0, verbose=0, warm_start=False),
+       fit_params={}, iid=True, n_jobs=1,
+       param_grid={&apos;n_estimators&apos;: [100, 300, 500, 1000], &apos;max_depth&apos;: [2, 3, 4, 5], &apos;max_features&apos;: [1, 3, 5, 7, 9]},
+       pre_dispatch=&apos;2*n_jobs&apos;, refit=True, scoring=&apos;accuracy&apos;, verbose=0)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#输出最高得分</span></div><div class="line">grid_search.best_score_</div></pre></td></tr></table></figure>
+<pre><code>0.7763881940970485
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#输出最佳参数</span></div><div class="line">grid_search.best_params_</div></pre></td></tr></table></figure>
+<pre><code>{&apos;max_depth&apos;: 5, &apos;max_features&apos;: 9, &apos;n_estimators&apos;: 100}
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/model/" rel="tag"># model</a>
+          
+            <a href="/tags/Random-Forest/" rel="tag"># Random Forest</a>
+          
+            <a href="/tags/GBDT/" rel="tag"># GBDT</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/19/plot/" rel="next" title="数据分析中利用matplotlib画图">
+                <i class="fa fa-chevron-left"></i> 数据分析中利用matplotlib画图
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/08/asset_quality_analysis/" rel="prev" title="借贷产品资产质量分析报告">
+                借贷产品资产质量分析报告 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Icey" />
+          <p class="site-author-name" itemprop="name">Icey</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#随机森林-Random-Forest"><span class="nav-number">1.</span> <span class="nav-text">随机森林(Random Forest)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#优缺点"><span class="nav-number">1.1.</span> <span class="nav-text">优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优点"><span class="nav-number">1.1.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点"><span class="nav-number">1.1.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码样例"><span class="nav-number">1.2.</span> <span class="nav-text">代码样例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看数据情况（数据清洗过程已忽略）"><span class="nav-number">1.2.1.</span> <span class="nav-text">查看数据情况（数据清洗过程已忽略）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量相关性检验"><span class="nav-number">1.2.2.</span> <span class="nav-text">变量相关性检验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机森林建模"><span class="nav-number">1.2.3.</span> <span class="nav-text">随机森林建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AUC值和ROC曲线"><span class="nav-number">1.2.4.</span> <span class="nav-text">AUC值和ROC曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#K-S值和K-S曲线"><span class="nav-number">1.2.5.</span> <span class="nav-text">K-S值和K-S曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PRC曲线与f1-score曲线"><span class="nav-number">1.2.6.</span> <span class="nav-text">PRC曲线与f1_score曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阈值与留存"><span class="nav-number">1.2.7.</span> <span class="nav-text">阈值与留存</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#梯度提升树GBDT-Gradient-Boosting-Decision-Tree"><span class="nav-number">2.</span> <span class="nav-text">梯度提升树GBDT (Gradient Boosting Decision Tree)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介-备注"><span class="nav-number">2.1.</span> <span class="nav-text">简介/备注</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优缺点-1"><span class="nav-number">2.2.</span> <span class="nav-text">优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优点-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码样例-1"><span class="nav-number">2.3.</span> <span class="nav-text">代码样例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GBDT建模"><span class="nav-number">2.3.1.</span> <span class="nav-text">GBDT建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法评估指标"><span class="nav-number">2.3.2.</span> <span class="nav-text">算法评估指标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ROC曲线"><span class="nav-number">2.3.3.</span> <span class="nav-text">ROC曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#K-S值和K-S曲线-1"><span class="nav-number">2.3.4.</span> <span class="nav-text">K-S值和K-S曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PRC曲线与f1-score曲线-1"><span class="nav-number">2.3.5.</span> <span class="nav-text">PRC曲线与f1_score曲线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阈值选取问题"><span class="nav-number">2.3.6.</span> <span class="nav-text">阈值选取问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动调参"><span class="nav-number">2.3.7.</span> <span class="nav-text">自动调参</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Icey</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
