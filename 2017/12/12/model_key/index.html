@@ -98,10 +98,11 @@
 <meta property="og:site_name" content="Adventures in Wonderland">
 <meta property="og:description" content="前段时间整理了一篇关于随机森林和GBDT模型对比的文章，里面在建模的过程中，用到了很多评价模型的指标，所以此次将这些指标单独拿出来进行一下概括，主要包括ROC曲线和AUC值，PRC曲线和f1值，KS曲线和KS值 在将上述内容时，首先明确以下指标：  TP：正确肯定的数目 FN：漏报，没有正确找到的匹配的数目 FP：误报，给出的匹配是不正确的 TN：正确拒绝的非匹配对数">
 <meta property="og:image" content="https://mjp1124.github.io/2017/12/12/model_key/tf.png">
+<meta property="og:image" content="https://mjp1124.github.io/2017/12/12/model_key/roc.png">
 <meta property="og:image" content="https://mjp1124.github.io/2017/12/12/model_key/PRC曲线.png">
 <meta property="og:image" content="https://mjp1124.github.io/2017/12/12/model_key/f1_score.png">
 <meta property="og:image" content="https://mjp1124.github.io/2017/12/12/model_key/KS曲线.png">
-<meta property="og:updated_time" content="2017-12-12T08:31:56.118Z">
+<meta property="og:updated_time" content="2017-12-13T01:27:47.791Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="评价分类模型好坏的重要指标ROC,PRC,KS">
 <meta name="twitter:description" content="前段时间整理了一篇关于随机森林和GBDT模型对比的文章，里面在建模的过程中，用到了很多评价模型的指标，所以此次将这些指标单独拿出来进行一下概括，主要包括ROC曲线和AUC值，PRC曲线和f1值，KS曲线和KS值 在将上述内容时，首先明确以下指标：  TP：正确肯定的数目 FN：漏报，没有正确找到的匹配的数目 FP：误报，给出的匹配是不正确的 TN：正确拒绝的非匹配对数">
@@ -382,8 +383,7 @@
 <li>FP：误报，给出的匹配是不正确的</li>
 <li>TN：正确拒绝的非匹配对数<a id="more"></a>
 <img src="/2017/12/12/model_key/tf.png" alt="图１" title="图１"></li>
-<li><p>ROC曲线</p>
-<ul>
+<li>ROC曲线<ul>
 <li>ROC曲线的横坐标为false positive rate（FPR），纵坐标为true positive rate（TPR）</li>
 <li>TPR和FPR的计算公式分别为：<ul>
 <li>真阳性率（真正类率） TPR = TP / (TP + FN)</li>
@@ -391,8 +391,7 @@
 </ul>
 </li>
 <li>AUC值：ROC曲线下的面积，取值范围为0.5-1，AUC值越大，模型的分类效果越好</li>
-<li>ROC曲线例如下
-</li>
+<li>ROC曲线例如下<img src="/2017/12/12/model_key/roc.png" alt="ROC曲线" title="ROC曲线"></li>
 </ul>
 </li>
 <li><p>PRC曲线</p>
