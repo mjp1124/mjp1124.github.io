@@ -1,0 +1,1024 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="model,k_means," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="聚类算法是一种无监督的学习算法，通过对无标记训练样本的学习，将样本划分为若干不相交的样本簇，本文简单介绍聚类分析中常用的距离及最经典的聚类算法－k_means算法 聚类分析中常用的距离欧氏距离_有序属性(连续属性) 在m维空间中两个点之间的真实距离，或者向量的自然长度（即该点到原点的距离） 2维空间,坐标(x1, y1)与坐标(x2, y2)的欧氏距离与自然长度 ρ=sqrt((x2-x1)²+(">
+<meta name="keywords" content="model,k_means">
+<meta property="og:type" content="article">
+<meta property="og:title" content="k_means聚类算法">
+<meta property="og:url" content="https://mjp1124.github.io/2018/05/15/kmeans/index.html">
+<meta property="og:site_name" content="Adventures in Wonderland">
+<meta property="og:description" content="聚类算法是一种无监督的学习算法，通过对无标记训练样本的学习，将样本划分为若干不相交的样本簇，本文简单介绍聚类分析中常用的距离及最经典的聚类算法－k_means算法 聚类分析中常用的距离欧氏距离_有序属性(连续属性) 在m维空间中两个点之间的真实距离，或者向量的自然长度（即该点到原点的距离） 2维空间,坐标(x1, y1)与坐标(x2, y2)的欧氏距离与自然长度 ρ=sqrt((x2-x1)²+(">
+<meta property="og:image" content="https://mjp1124.github.io/2018/05/15/kmeans/二维空间距离示例.png">
+<meta property="og:image" content="https://mjp1124.github.io/2018/05/15/kmeans/混合距离.png">
+<meta property="og:image" content="https://mjp1124.github.io/2018/05/15/kmeans/肘部法则.png">
+<meta property="og:updated_time" content="2018-05-15T07:50:23.148Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="k_means聚类算法">
+<meta name="twitter:description" content="聚类算法是一种无监督的学习算法，通过对无标记训练样本的学习，将样本划分为若干不相交的样本簇，本文简单介绍聚类分析中常用的距离及最经典的聚类算法－k_means算法 聚类分析中常用的距离欧氏距离_有序属性(连续属性) 在m维空间中两个点之间的真实距离，或者向量的自然长度（即该点到原点的距离） 2维空间,坐标(x1, y1)与坐标(x2, y2)的欧氏距离与自然长度 ρ=sqrt((x2-x1)²+(">
+<meta name="twitter:image" content="https://mjp1124.github.io/2018/05/15/kmeans/二维空间距离示例.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://mjp1124.github.io/2018/05/15/kmeans/"/>
+
+
+
+
+
+  <title>k_means聚类算法 | Adventures in Wonderland</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Adventures in Wonderland</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://mjp1124.github.io/2018/05/15/kmeans/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Icey">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Adventures in Wonderland">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">k_means聚类算法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-15T00:00:00+08:00">
+                2018-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/model/" itemprop="url" rel="index">
+                    <span itemprop="name">model</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>聚类算法是一种无监督的学习算法，通过对无标记训练样本的学习，将样本划分为若干不相交的样本簇，本文简单介绍聚类分析中常用的距离及最经典的聚类算法－k_means算法</p>
+<h2 id="聚类分析中常用的距离"><a href="#聚类分析中常用的距离" class="headerlink" title="聚类分析中常用的距离"></a>聚类分析中常用的距离</h2><h3 id="欧氏距离-有序属性-连续属性"><a href="#欧氏距离-有序属性-连续属性" class="headerlink" title="欧氏距离_有序属性(连续属性)"></a>欧氏距离_有序属性(连续属性)</h3><ul>
+<li>在m维空间中两个点之间的真实距离，或者向量的自然长度（即该点到原点的距离）</li>
+<li>2维空间,坐标(x1, y1)与坐标(x2, y2)的欧氏距离与自然长度<ul>
+<li>ρ=sqrt((x2-x1)²+(y2-y1)²); </li>
+<li>|X|=sqrt（x2²+y2²）</li>
+</ul>
+</li>
+<li>3维空间,坐标(x1, y1,z1)与坐标(x2, y2,z2)的欧氏距离与自然长度<ul>
+<li>ρ=sqrt((x2-x1)²+(y2-y1)²+(z2-z1)²);</li>
+<li>|X|=sqrt（x2²+y2²+z2²）</li>
+</ul>
+</li>
+<li>n维空间<ul>
+<li>两个点A=(a[1]，a[2]，…，a[n])和B=(b[1]，b[2]，…，b[n])的欧氏距离</li>
+<li>ρ(A，B) =sqrt[ ∑( a[i] - b[i] )² ] (i = 1，2，…，n)</li>
+<li>向量 x=(x[1]，x[2]，…，x[n]) 的自然长度</li>
+<li>|x| = sqrt(x[1]²+ x[2]²+ … + x[n]²)<a id="more"></a>
+<h3 id="曼哈顿距离-有序属性-连续属性"><a href="#曼哈顿距离-有序属性-连续属性" class="headerlink" title="曼哈顿距离_有序属性(连续属性)"></a>曼哈顿距离_有序属性(连续属性)</h3></li>
+</ul>
+</li>
+<li>用以标明两个点在标准坐标系上的绝对轴距总和</li>
+<li>2维空间,两个点（x1, y1），（x2, y2）的曼哈顿距离<ul>
+<li>d = |x1-x2|+|y1-y2|</li>
+</ul>
+</li>
+<li>n维空间,两个点A=(a[1]，a[2]，…，a[n])和B=(b[1]，b[2]，…，b[n])的曼哈顿距离<ul>
+<li>d = ∑(a[i] - b[i]) (i = 1，2，…，n)</li>
+</ul>
+</li>
+</ul>
+<img src="/2018/05/15/kmeans/二维空间距离示例.png" alt="二维空间距离示例" title="二维空间距离示例">
+<h3 id="闵可夫斯基距离-有序属性-连续属性"><a href="#闵可夫斯基距离-有序属性-连续属性" class="headerlink" title="闵可夫斯基距离_有序属性(连续属性)"></a>闵可夫斯基距离_有序属性(连续属性)</h3><ul>
+<li>闵氏距离是对多个距离度量公式的概括性的表述</li>
+<li>n维空间,两个点A=(a[1]，a[2]，…，a[n])和B=(b[1]，b[2]，…，b[n])的闵可夫斯基距离<ul>
+<li>d = (∑(a[i] - b[i])^p)^(1/p) (i = 1，2，…，n)</li>
+</ul>
+</li>
+<li>当p=2时，即为欧氏距离</li>
+<li>当p=1时，即为曼哈顿距离</li>
+</ul>
+<h3 id="VDM距离-无序属性（离散属性）"><a href="#VDM距离-无序属性（离散属性）" class="headerlink" title="VDM距离_无序属性（离散属性）"></a>VDM距离_无序属性（离散属性）</h3><ul>
+<li><p>VDM距离是通过计算在某个属性上某种取值的样本数量占比来计算距离</p>
+</li>
+<li><p>Mu,a表示在属性u上取值为a的样本数，Mu,a,i表示在第i个样本簇中在属性u上取值为a的样本数,k为样本簇数，则属性u上两个离散值a与b的VDM距离</p>
+<ul>
+<li>d = ∑((Mu,a,i/Mu,a - Mu,b,i/Mu,b)^p )(i = 1，2，…，k)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pandas <span class="keyword">import</span> DataFrame</div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"></div><div class="line">df = pd.DataFrame(&#123;<span class="string">'簇'</span>:[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],<span class="string">'a'</span>:[<span class="number">100</span>,<span class="number">200</span>,<span class="number">300</span>],<span class="string">'b'</span>:[<span class="number">200</span>,<span class="number">300</span>,<span class="number">400</span>],<span class="string">'c'</span>:[<span class="number">300</span>,<span class="number">400</span>,<span class="number">500</span>],&#125;)</div><div class="line">df</div></pre></td></tr></table></figure>
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>a</th>
+      <th>b</th>
+      <th>c</th>
+      <th>簇</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>100</td>
+      <td>200</td>
+      <td>300</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>200</td>
+      <td>300</td>
+      <td>400</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>300</td>
+      <td>400</td>
+      <td>500</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<p>p=2时，VDM距离如下</p>
+<p>a,b的距离：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">np.square(<span class="number">100</span>/<span class="number">600</span><span class="number">-200</span>/<span class="number">900</span>)+np.square(<span class="number">200</span>/<span class="number">600</span><span class="number">-300</span>/<span class="number">900</span>)+np.square(<span class="number">300</span>/<span class="number">600</span><span class="number">-400</span>/<span class="number">900</span>)</div></pre></td></tr></table></figure>
+<pre><code>0.006172839506172843
+</code></pre><p>b,c的距离</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">np.square(<span class="number">300</span>/<span class="number">1200</span><span class="number">-200</span>/<span class="number">900</span>)+np.square(<span class="number">400</span>/<span class="number">1200</span><span class="number">-300</span>/<span class="number">900</span>)+np.square(<span class="number">500</span>/<span class="number">1200</span><span class="number">-400</span>/<span class="number">900</span>)</div></pre></td></tr></table></figure>
+<pre><code>0.001543209876543208
+</code></pre><p>a,c的距离</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">np.square(<span class="number">100</span>/<span class="number">600</span><span class="number">-300</span>/<span class="number">1200</span>)+np.square(<span class="number">200</span>/<span class="number">600</span><span class="number">-400</span>/<span class="number">1200</span>)+np.square(<span class="number">300</span>/<span class="number">600</span><span class="number">-500</span>/<span class="number">1200</span>)</div></pre></td></tr></table></figure>
+<pre><code>0.013888888888888888
+</code></pre><h2 id="混合使用"><a href="#混合使用" class="headerlink" title="混合使用"></a>混合使用</h2><ul>
+<li>当样本中既包含有序变量有包含无序变量时，可将闵可夫斯基距离与VDM距离混合使用</li>
+</ul>
+<img src="/2018/05/15/kmeans/混合距离.png" alt="距离混合使用公式" title="距离混合使用公式">
+<h2 id="聚类前准备工作－归一化"><a href="#聚类前准备工作－归一化" class="headerlink" title="聚类前准备工作－归一化"></a>聚类前准备工作－归一化</h2><ul>
+<li>聚类算法在计算距离前，为防止某些数据偏差过大问题，通常会先归一化</li>
+<li>归一化方法<ul>
+<li>Standardization（zero_score）: 量化后的特征服从标准正态分布，将分布在[-1, 1]区间<ul>
+<li>(x-u)/std,其中u为向量均值，std为标准差</li>
+</ul>
+</li>
+<li>Min-Max Scaling： : 量化后的特征分布在[0, 1]区间<ul>
+<li>（x-min）/(max-min)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">normalization</span><span class="params">(df,var,method=<span class="string">'min-max'</span>)</span>:</span></div><div class="line">    x = df[var]</div><div class="line">    new_var = var + <span class="string">'_norm'</span></div><div class="line">    <span class="keyword">if</span> method == <span class="string">'min-max'</span>:</div><div class="line">        x_min = min(x)</div><div class="line">        x_max = max(x)</div><div class="line">        d = x_max - x_min</div><div class="line">        df[new_var] = [(i - x_min)*<span class="number">1.0</span>/d <span class="keyword">for</span> i <span class="keyword">in</span> x]</div><div class="line">        <span class="keyword">del</span> df[var]</div><div class="line">    <span class="keyword">elif</span> method == <span class="string">'zero-score'</span>:</div><div class="line">        x_mean = np.mean(x)</div><div class="line">        x_std = np.std(x)</div><div class="line">        df[new_var] = [(i - x_mean)*<span class="number">1.0</span> / x_std <span class="keyword">for</span> i <span class="keyword">in</span> x]</div><div class="line">        <span class="keyword">del</span> df[var]</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        print(<span class="string">'请输入归一化方法'</span>)</div></pre></td></tr></table></figure>
+<h2 id="k-means算法"><a href="#k-means算法" class="headerlink" title="k-means算法"></a>k-means算法</h2><ul>
+<li>k_means算法基本原理<ul>
+<li>设定k值，并随机选取k个样本作为初始均值向量（质心）</li>
+<li>将剩下的样本逐一与上述k各样本进行距离计算，并合并入最小距离的集合中，首次生成簇，并计算每一簇的均值向量</li>
+<li>以新的均值向量作为初始均值向量，重复上述过程，直至样本簇不再变化，得到最终的簇划分</li>
+</ul>
+</li>
+</ul>
+<h3 id="1、确定k值"><a href="#1、确定k值" class="headerlink" title="1、确定k值"></a>1、确定k值</h3><ul>
+<li>根据业务设定</li>
+<li>肘部法则(并不常用）<ul>
+<li>肘部法则：成本函数最小化</li>
+<li>成本函数是各个类畸变程度之和。每个类的畸变程度等于该类重心与其内部成员位置距离的平方和</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> random</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">from</span> matplotlib.ticker <span class="keyword">import</span> FuncFormatter</div><div class="line"><span class="keyword">import</span> seaborn</div><div class="line">plt.rcParams[<span class="string">'font.family'</span>]=<span class="string">"SimHei"</span><span class="comment">#显示中文字体</span></div><div class="line"><span class="keyword">from</span> IPython.core.display <span class="keyword">import</span> HTML,display</div><div class="line"><span class="keyword">from</span> pandas <span class="keyword">import</span> DataFrame</div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">from</span> sklearn.cluster <span class="keyword">import</span> KMeans</div><div class="line"><span class="keyword">from</span> scipy.spatial.distance <span class="keyword">import</span> cdist</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_k</span><span class="params">(train_data,min_k=<span class="number">1</span>,max_k=<span class="number">10</span>)</span>:</span></div><div class="line">    train_array = np.array(train_data)</div><div class="line">    K = range(min_k, max_k)</div><div class="line">    mean_distortions = []</div><div class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> K:<span class="comment">#遍历K计算畸变</span></div><div class="line">        kmeans = KMeans(n_clusters=k)</div><div class="line">        kmeans.fit(train_array)</div><div class="line">        mean_distortions.append(sum(np.min(cdist(train_array, kmeans.cluster_centers_, <span class="string">'euclidean'</span>), axis=<span class="number">1</span>)) / train_data.shape[<span class="number">0</span>])<span class="comment">#此处用欧氏距离</span></div><div class="line">    plt.plot(K, mean_distortions, <span class="string">'bx-'</span>)</div><div class="line">    plt.xlabel(<span class="string">'k取值'</span>)</div><div class="line">    plt.ylabel(<span class="string">'平均畸变程度'</span>)</div><div class="line">    plt.title(<span class="string">'用肘部法则来确定最佳的K值'</span>);</div><div class="line">    plt.show();</div><div class="line">    <span class="keyword">return</span> mean_distortions</div></pre></td></tr></table></figure>
+<h3 id="2、定义距离函数"><a href="#2、定义距离函数" class="headerlink" title="2、定义距离函数"></a>2、定义距离函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">minkovDist</span><span class="params">(x,y,p=<span class="number">2</span>)</span>:</span></div><div class="line">    <span class="keyword">if</span> p&gt;=<span class="number">1</span>:</div><div class="line"><span class="comment">#         return sum((x-y)**p)**(1/p)</span></div><div class="line">        <span class="keyword">return</span> np.linalg.norm(x-y,ord=p)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        print(<span class="string">'p must be larger than or equal to 1'</span>)</div></pre></td></tr></table></figure>
+<h3 id="3、定义训练模型函数"><a href="#3、定义训练模型函数" class="headerlink" title="3、定义训练模型函数"></a>3、定义训练模型函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">KmensAlgo</span><span class="params">(train_data,k,p=<span class="number">2</span>)</span>:</span></div><div class="line">    <span class="comment"># train_data: 训练样本此处为table形式（我日常比较常用）</span></div><div class="line">    <span class="comment"># k: 簇数</span></div><div class="line">    <span class="comment"># 函数结果：返回两个参数，分别为训练集的分簇结果及质心</span></div><div class="line">    </div><div class="line">    train_array = np.array(train_data)</div><div class="line">    length = len(train_data)</div><div class="line">    <span class="comment"># 随机选取k个质心</span></div><div class="line">    random_iloc = random.sample(range(length),k)</div><div class="line">    cent = [train_array[i] <span class="keyword">for</span> i <span class="keyword">in</span> random_iloc]</div><div class="line">    <span class="comment"># 定义一个list,用来储存每行所属簇</span></div><div class="line">    position_list = [<span class="number">0</span>]*length</div><div class="line">    changed = <span class="keyword">True</span></div><div class="line">    <span class="keyword">while</span> changed:</div><div class="line">        <span class="comment"># 计算每个点到质心的距离，选出最短距离并进行簇归类</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(length):</div><div class="line">            dist_to_cent = [minkovDist(train_array[i],cent_value) <span class="keyword">for</span> cent_value <span class="keyword">in</span> cent]</div><div class="line">            positin = dist_to_cent.index(min(dist_to_cent))</div><div class="line">            position_list[i] = positin</div><div class="line">        <span class="comment"># 更新质心</span></div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(k):</div><div class="line">            now_position = [l <span class="keyword">for</span> l <span class="keyword">in</span> range(length) <span class="keyword">if</span> position_list[l]==j]</div><div class="line">            new_cents = np.mean([train_data.iloc[l] <span class="keyword">for</span> l <span class="keyword">in</span> now_position],axis=<span class="number">0</span>)<span class="comment">#每簇的数据均值作为新的质心</span></div><div class="line">            <span class="keyword">if</span> (minkovDist(new_cents,cent[j]))&gt;=<span class="number">0.00001</span>:<span class="comment">#检查质心是否变化</span></div><div class="line">                cent[j] = new_cents</div><div class="line">                changed=<span class="keyword">True</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                changed=<span class="keyword">False</span></div><div class="line">                print(str(j)+<span class="string">'簇质心已更新完毕'</span>)</div><div class="line">    <span class="keyword">return</span> position_list,cent</div></pre></td></tr></table></figure>
+<h3 id="4、测试集分类结果"><a href="#4、测试集分类结果" class="headerlink" title="4、测试集分类结果"></a>4、测试集分类结果</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">predit</span><span class="params">(test_df,cent)</span>:</span></div><div class="line">    test_array = np.array(test_df)</div><div class="line">    position_list = [<span class="number">0</span>]*len(test_array)</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(test_array)):</div><div class="line">        dist_to_cent = [minkovDist(test_array[i],cent_value) <span class="keyword">for</span> cent_value <span class="keyword">in</span> cent]</div><div class="line">        positin = dist_to_cent.index(min(dist_to_cent))</div><div class="line">        position_list[i] = positin</div><div class="line">    <span class="keyword">return</span> position_list</div></pre></td></tr></table></figure>
+<h3 id="5、模型结果"><a href="#5、模型结果" class="headerlink" title="5、模型结果"></a>5、模型结果</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">c1 = np.random.uniform(<span class="number">1</span>, <span class="number">2</span>, (<span class="number">2</span>, <span class="number">10</span>))</div><div class="line">c2 = np.random.uniform(<span class="number">10</span>, <span class="number">20</span>, (<span class="number">2</span>, <span class="number">10</span>))</div><div class="line">train_data = DataFrame(np.hstack((c1, c2)).T)</div><div class="line">train_data</div></pre></td></tr></table></figure>
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.827724</td>
+      <td>1.865160</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.236853</td>
+      <td>1.138610</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.608795</td>
+      <td>1.163853</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.209080</td>
+      <td>1.924797</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.897677</td>
+      <td>1.130945</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1.227030</td>
+      <td>1.612169</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1.233422</td>
+      <td>1.880208</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1.536948</td>
+      <td>1.081214</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1.627881</td>
+      <td>1.856679</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1.985797</td>
+      <td>1.730550</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>17.456984</td>
+      <td>18.938306</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>16.210481</td>
+      <td>16.634254</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>16.161114</td>
+      <td>11.328820</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>11.100146</td>
+      <td>17.821086</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>11.312670</td>
+      <td>12.294023</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>17.168333</td>
+      <td>19.876406</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>19.034098</td>
+      <td>11.622804</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>16.523412</td>
+      <td>13.337517</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>17.286952</td>
+      <td>11.953653</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>10.363263</td>
+      <td>12.239709</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cost = get_k(train_data)</div></pre></td></tr></table></figure>
+<img src="/2018/05/15/kmeans/肘部法则.png" alt="肘部法则计算结果" title="肘部法则计算结果">
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">position,cent = KmensAlgo(train_data,k=<span class="number">2</span>,p=<span class="number">2</span>)</div></pre></td></tr></table></figure>
+<pre><code>0簇质心已更新完毕
+1簇质心已更新完毕
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">position</div></pre></td></tr></table></figure>
+<pre><code>[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cent</div></pre></td></tr></table></figure>
+<pre><code>[array([1.5391208 , 1.53841869]), array([15.26174538, 14.60465772])]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">test_df = DataFrame(&#123;<span class="string">'a'</span>:[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">20</span>],<span class="string">'b'</span>:[<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">18</span>]&#125;)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">predit(test_df,cent)</div></pre></td></tr></table></figure>
+<pre><code>[0, 0, 0, 1]
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/model/" rel="tag"># model</a>
+          
+            <a href="/tags/k-means/" rel="tag"># k_means</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/01/some_notes/" rel="next" title="常用操作小笔记">
+                <i class="fa fa-chevron-left"></i> 常用操作小笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpeg"
+               alt="Icey" />
+          <p class="site-author-name" itemprop="name">Icey</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#聚类分析中常用的距离"><span class="nav-number">1.</span> <span class="nav-text">聚类分析中常用的距离</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#欧氏距离-有序属性-连续属性"><span class="nav-number">1.1.</span> <span class="nav-text">欧氏距离_有序属性(连续属性)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#曼哈顿距离-有序属性-连续属性"><span class="nav-number">1.2.</span> <span class="nav-text">曼哈顿距离_有序属性(连续属性)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#闵可夫斯基距离-有序属性-连续属性"><span class="nav-number">1.3.</span> <span class="nav-text">闵可夫斯基距离_有序属性(连续属性)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VDM距离-无序属性（离散属性）"><span class="nav-number">1.4.</span> <span class="nav-text">VDM距离_无序属性（离散属性）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#混合使用"><span class="nav-number">2.</span> <span class="nav-text">混合使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚类前准备工作－归一化"><span class="nav-number">3.</span> <span class="nav-text">聚类前准备工作－归一化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#k-means算法"><span class="nav-number">4.</span> <span class="nav-text">k-means算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、确定k值"><span class="nav-number">4.1.</span> <span class="nav-text">1、确定k值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、定义距离函数"><span class="nav-number">4.2.</span> <span class="nav-text">2、定义距离函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、定义训练模型函数"><span class="nav-number">4.3.</span> <span class="nav-text">3、定义训练模型函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、测试集分类结果"><span class="nav-number">4.4.</span> <span class="nav-text">4、测试集分类结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、模型结果"><span class="nav-number">4.5.</span> <span class="nav-text">5、模型结果</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Icey</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

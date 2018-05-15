@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="bolg,github,markdown," />
+  <meta name="keywords" content="git,screen," />
 
 
 
@@ -90,17 +90,17 @@
 
 
 
-<meta name="description" content="发布博客123456789hexo clean#清理hexo g#generate,生成hexo s#本地起个服务，预览hexo deploy#发布deploy的时候如果出现报错信息：ERROR Deployer not found: git">
-<meta name="keywords" content="bolg,github,markdown">
+<meta name="description" content="工作过程中，常用到的一些小操作，做个备份便于查询 服务与文件 连接服务器： [ssh user_name]@[server_ip] 在连接的服务器启动jupyter后再本地浏览器打开： jupyter notebook –ip=[server_ip] nohop ? 传送文件： scp -pr [本地文件夹/文件] [目标存放地址] 重启服务器: sudo reboot  虚拟环境 安装: pip">
+<meta name="keywords" content="git,screen">
 <meta property="og:type" content="article">
-<meta property="og:title" content="生成博客过程中的小问题">
-<meta property="og:url" content="https://mjp1124.github.io/2017/03/10/blog_memo/index.html">
+<meta property="og:title" content="常用操作小笔记">
+<meta property="og:url" content="https://mjp1124.github.io/2018/05/01/some_notes/index.html">
 <meta property="og:site_name" content="Adventures in Wonderland">
-<meta property="og:description" content="发布博客123456789hexo clean#清理hexo g#generate,生成hexo s#本地起个服务，预览hexo deploy#发布deploy的时候如果出现报错信息：ERROR Deployer not found: git">
-<meta property="og:updated_time" content="2017-09-26T11:28:30.997Z">
+<meta property="og:description" content="工作过程中，常用到的一些小操作，做个备份便于查询 服务与文件 连接服务器： [ssh user_name]@[server_ip] 在连接的服务器启动jupyter后再本地浏览器打开： jupyter notebook –ip=[server_ip] nohop ? 传送文件： scp -pr [本地文件夹/文件] [目标存放地址] 重启服务器: sudo reboot  虚拟环境 安装: pip">
+<meta property="og:updated_time" content="2018-05-15T07:50:21.068Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="生成博客过程中的小问题">
-<meta name="twitter:description" content="发布博客123456789hexo clean#清理hexo g#generate,生成hexo s#本地起个服务，预览hexo deploy#发布deploy的时候如果出现报错信息：ERROR Deployer not found: git">
+<meta name="twitter:title" content="常用操作小笔记">
+<meta name="twitter:description" content="工作过程中，常用到的一些小操作，做个备份便于查询 服务与文件 连接服务器： [ssh user_name]@[server_ip] 在连接的服务器启动jupyter后再本地浏览器打开： jupyter notebook –ip=[server_ip] nohop ? 传送文件： scp -pr [本地文件夹/文件] [目标存放地址] 重启服务器: sudo reboot  虚拟环境 安装: pip">
 
 
 
@@ -128,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="https://mjp1124.github.io/2017/03/10/blog_memo/"/>
+  <link rel="canonical" href="https://mjp1124.github.io/2018/05/01/some_notes/"/>
 
 
 
 
 
-  <title>生成博客过程中的小问题 | Adventures in Wonderland</title>
+  <title>常用操作小笔记 | Adventures in Wonderland</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -283,7 +283,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://mjp1124.github.io/2017/03/10/blog_memo/">
+    <link itemprop="mainEntityOfPage" href="https://mjp1124.github.io/2018/05/01/some_notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Icey">
@@ -300,7 +300,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">生成博客过程中的小问题</h1>
+          <h1 class="post-title" itemprop="name headline">常用操作小笔记</h1>
         
 
         <div class="post-meta">
@@ -312,8 +312,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-10T00:00:00+08:00">
-                2017-03-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-01T00:00:00+08:00">
+                2018-05-01
               </time>
             
 
@@ -335,8 +335,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/hexo-blog/" itemprop="url" rel="index">
-                    <span itemprop="name">hexo_blog</span>
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
                   </a>
                 </span>
 
@@ -369,71 +369,55 @@
       
 
       
-        <h1 id="发布博客"><a href="#发布博客" class="headerlink" title="发布博客"></a>发布博客</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">hexo clean#清理</div><div class="line"></div><div class="line">hexo g#generate,生成</div><div class="line"></div><div class="line">hexo s#本地起个服务，预览</div><div class="line"></div><div class="line">hexo deploy#发布</div><div class="line"></div><div class="line">deploy的时候如果出现报错信息：ERROR Deployer not found: git</div></pre></td></tr></table></figure>
-<a id="more"></a>
-<p>#解决办法</p>
-<p>npm install hexo-deployer-git –save</p>
-<h1 id="建立github免密"><a href="#建立github免密" class="headerlink" title="建立github免密"></a>建立github免密</h1><p>ssh-keygen -t rsa -b 4096 -C “mjp1124@126.com”</p>
-<p>Enter a file in which to save the key (/home/you/.ssh/id_rsa): [Press enter]</p>
-<p>Enter passphrase (empty for no passphrase): [Type a passphrase]</p>
-<p>Enter same passphrase again: [Type passphrase again]</p>
-<p>eval “$(ssh-agent -s)”</p>
-<p>ssh-add ~/.ssh/id_rsa</p>
-<p>sudo apt-get install xclip</p>
-<p>xclip -sel clip &lt; ~/.ssh/id_rsa.pub</p>
-<p>去github,点击Settings</p>
-<p>点击 SSH and GPG keys</p>
-<p>点击 New SSH key or Add SSH key</p>
-<p>在”Title”中可以对新的key添加一些描述，例如: “Personal MacBook Air”</p>
-<p>在key的空格里面直接粘贴(因为前面的操作已经自动复制了)</p>
-<p>点击Add SSH key</p>
-<p>完成后需要重新登录</p>
-<h1 id="notebook-转成markdowm"><a href="#notebook-转成markdowm" class="headerlink" title="notebook 转成markdowm"></a>notebook 转成markdowm</h1><p><code>jupyter nbconvert --to markdown test.ipynb --output /home/.../_posts/test2.md #单一文件转成md</code></p>
-<p><code>jupyter nbconvert --to markdown notebook的名字.ipynb --output-dir /home/.../_posts/</code></p>
-<ul>
-<li><p>如果是批量转成md文件，用dir，但是不能改文件名字，单一文件可以不用加dir</p>
-</li>
-<li><p>notebook 中的图片保存在notebook的名字_files文件中，需要手动把‘_files’删掉，需要保持md和文件夹名字一致</p>
-</li>
-<li><p>显示图片，文件中加入：  ——写在想显示图片的位置（在hexo推荐，其他地方不行）</p>
-</li>
-<li><p>markdown 显示图片的简单方法：![想显示出来的明细](图片地址)</p>
-</li>
-<li><p>加超链接，<a href="想链接到的网址">这里</a></p>
-</li>
-<li><p>md文件中加入 \<!--more-->,在博客中后面的内容显示为：阅读全文</p>
-</li>
-<li><p>md的开头加入：</p>
-<blockquote>
-<p>-–</p>
-<p>title: 画图那些事儿</p>
-<p>categories: pandas</p>
-<p>tags: </p>
-<p>  - plot</p>
-<p> -–</p>
-</blockquote>
-</li>
+        <p>工作过程中，常用到的一些小操作，做个备份便于查询</p>
+<h3 id="服务与文件"><a href="#服务与文件" class="headerlink" title="服务与文件"></a>服务与文件</h3><ul>
+<li>连接服务器： [ssh user_name]@[server_ip]</li>
+<li>在连接的服务器启动jupyter后再本地浏览器打开： jupyter notebook –ip=[server_ip] nohop ?</li>
+<li>传送文件： scp -pr [本地文件夹/文件] [目标存放地址]</li>
+<li>重启服务器: sudo reboot </li>
+<li>虚拟环境<ul>
+<li>安装: pip3 install virtualenv</li>
+<li>新建: virtualenv -p [虚拟环境存放的目标位置]</li>
+<li>启动: source [目标位置/bin/activate]　</li>
+<li>自己编写的函数包，可以放在虚拟环境下的lib/python环境中的site-packages中</li>
+<li>指定调用的包的路径：site-packages mylib.pth中编写</li>
 </ul>
-<h1 id="source-文件夹下面添加两个文件夹，一个categories，一个tags"><a href="#source-文件夹下面添加两个文件夹，一个categories，一个tags" class="headerlink" title="source 文件夹下面添加两个文件夹，一个categories，一个tags"></a>source 文件夹下面添加两个文件夹，一个categories，一个tags</h1><ul>
-<li><p>文件夹下面添加index.md文件，里面的内容为：</p>
-<blockquote>
-<p>-–</p>
-<p>title: categories(tags)</p>
-<p>type: “categories(tags)”</p>
-<p>-–</p>
-</blockquote>
 </li>
+<li>bashrc文件定义短句样例: alias jter=’jupyter notebook’<a id="more"></a>
+<h3 id="git"><a href="#git" class="headerlink" title="git"></a>git</h3></li>
+<li>比较文件区别： git diff [文件１]　[文件2] #git diff master比较的是历史区和工作区的差异</li>
+<li>查看版本号： git log –graph</li>
+<li>回退版本： git reset –hard [版本号]　#版本号前几个字段即可</li>
+<li>查看每次操作的号段： git reflog</li>
+<li>删除文件： git rm</li>
+<li>克隆git上的文件: git clone </li>
+<li>分支(branch)相关<ul>
+<li>查看分支: git branch</li>
+<li>新建分支: git checkout -b [branchname]</li>
+<li>切换分支: git checkout [branchname]</li>
+<li>合并分支: git merge [branchname]</li>
+<li>删除分支: git branch　-d [branchname]</li>
 </ul>
-<h1 id="博客中无法正常显示表格的问题"><a href="#博客中无法正常显示表格的问题" class="headerlink" title="博客中无法正常显示表格的问题"></a>博客中无法正常显示表格的问题</h1><ul>
-<li><p>在_config.yml文件中添加以下内容</p>
-<blockquote>
-<p>-–</p>
-<p>marked: </p>
-<p>  - gfm: true</p>
-<p>  - breaks: false
- -–</p>
-</blockquote>
 </li>
+<li>拉取git上的文件: git pull origin [branchname]</li>
+<li>文件修改后传到git上<ul>
+<li>git status</li>
+<li>git add –all</li>
+<li>git commit -m [备注信息]</li>
+<li>git push origin [branchname]</li>
+</ul>
+</li>
+<li>连接远程仓库: git remote add origin [仓库的地址]</li>
+</ul>
+<h3 id="screen"><a href="#screen" class="headerlink" title="screen"></a>screen</h3><ul>
+<li>创建并进入: screen</li>
+<li>创建一个新的运行shell的窗口并切换到该窗口: Ctrl-a c</li>
+<li>暂时离开,后台执行: Ctrl-a d #会输出一个screen地址</li>
+<li>进入制定地址的window: screen -r [screen地址]</li>
+<li>关闭：　Ctrl-a k</li>
+<li>显示所有键绑定信息: Ctrl-a ?</li>
+<li>切换到下一个window: Ctrl-a n</li>
+<li>切换到前一个window:　Ctrl-a p</li>
 </ul>
 
       
@@ -464,11 +448,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/bolg/" rel="tag"># bolg</a>
+            <a href="/tags/git/" rel="tag"># git</a>
           
-            <a href="/tags/github/" rel="tag"># github</a>
-          
-            <a href="/tags/markdown/" rel="tag"># markdown</a>
+            <a href="/tags/screen/" rel="tag"># screen</a>
           
         </div>
       
@@ -481,14 +463,18 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/12/12/model_key/" rel="next" title="评价分类模型好坏的重要指标ROC,PRC,KS">
+                <i class="fa fa-chevron-left"></i> 评价分类模型好坏的重要指标ROC,PRC,KS
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/05/10/database/" rel="prev" title="python与数据库的连接与使用">
-                python与数据库的连接与使用 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/05/15/kmeans/" rel="prev" title="k_means聚类算法">
+                k_means聚类算法 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -618,7 +604,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#发布博客"><span class="nav-number">1.</span> <span class="nav-text">发布博客</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#建立github免密"><span class="nav-number">2.</span> <span class="nav-text">建立github免密</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#notebook-转成markdowm"><span class="nav-number">3.</span> <span class="nav-text">notebook 转成markdowm</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#source-文件夹下面添加两个文件夹，一个categories，一个tags"><span class="nav-number">4.</span> <span class="nav-text">source 文件夹下面添加两个文件夹，一个categories，一个tags</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#博客中无法正常显示表格的问题"><span class="nav-number">5.</span> <span class="nav-text">博客中无法正常显示表格的问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务与文件"><span class="nav-number">1.</span> <span class="nav-text">服务与文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git"><span class="nav-number">2.</span> <span class="nav-text">git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#screen"><span class="nav-number">3.</span> <span class="nav-text">screen</span></a></li></ol></div>
             
 
           </div>
