@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>https://mjp1124.github.io/2018/05/01/some_notes/</loc>
+    <lastmod>2018-05-16T06:01:01.126Z</lastmod>
+    <data>
+        <display>
+        <title>常用操作小笔记</title>
+        <pubTime>2018-04-30T16:00:00.000Z</pubTime>
+        
+        <tag>git</tag>
+         
+        <tag>screen</tag>
+         
+         
+           
+             
+              <breadCrumb title="git" url="https://mjp1124.github.io/categories/git/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://mjp1124.github.io/2018/05/15/kmeans/</loc>
     <lastmod>2018-05-15T07:50:23.148Z</lastmod>
     <data>
@@ -19,28 +41,6 @@
            
              
               <breadCrumb title="model" url="https://mjp1124.github.io/categories/model/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://mjp1124.github.io/2018/05/01/some_notes/</loc>
-    <lastmod>2018-05-15T07:50:21.068Z</lastmod>
-    <data>
-        <display>
-        <title>常用操作小笔记</title>
-        <pubTime>2018-04-30T16:00:00.000Z</pubTime>
-        
-        <tag>git</tag>
-         
-        <tag>screen</tag>
-         
-         
-           
-             
-              <breadCrumb title="git" url="https://mjp1124.github.io/categories/git/"/>
           
         </display>
     </data>
