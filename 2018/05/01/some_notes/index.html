@@ -97,7 +97,7 @@
 <meta property="og:url" content="https://mjp1124.github.io/2018/05/01/some_notes/index.html">
 <meta property="og:site_name" content="Adventures in Wonderland">
 <meta property="og:description" content="工作过程中，常用到的一些小操作，做个备份便于查询 服务与文件 连接服务器： [ssh user_name]@[server_ip] 在连接的服务器启动jupyter后再本地浏览器打开： jupyter notebook –ip=[server_ip] nohop ? 传送文件： scp -pr [本地文件夹/文件] [目标存放地址] 重启服务器: sudo reboot  虚拟环境 安装: pip">
-<meta property="og:updated_time" content="2018-05-16T06:01:01.126Z">
+<meta property="og:updated_time" content="2018-05-18T08:51:56.074Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="常用操作小笔记">
 <meta name="twitter:description" content="工作过程中，常用到的一些小操作，做个备份便于查询 服务与文件 连接服务器： [ssh user_name]@[server_ip] 在连接的服务器启动jupyter后再本地浏览器打开： jupyter notebook –ip=[server_ip] nohop ? 传送文件： scp -pr [本地文件夹/文件] [目标存放地址] 重启服务器: sudo reboot  虚拟环境 安装: pip">
@@ -377,8 +377,9 @@
 <li>重启服务器: sudo reboot </li>
 <li>虚拟环境<ul>
 <li>安装: pip3 install virtualenv</li>
-<li>新建: virtualenv -p [虚拟环境存放的目标位置]</li>
+<li>新建: virtualenv -p /usr/bin/python3　[虚拟环境存放的目标位置]</li>
 <li>启动: source [目标位置/bin/activate]　</li>
+<li>退出: deactivate</li>
 <li>自己编写的函数包，可以放在虚拟环境下的lib/python环境中的site-packages中</li>
 <li>指定调用的包的路径：site-packages mylib.pth中编写</li>
 </ul>
